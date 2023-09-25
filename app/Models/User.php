@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        "birth_date",
+        "surname",
     ];
 
     /**
@@ -42,4 +44,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Funzione per chiamare le Case
+
+    public function houses()
+    {
+        return $this->hasMany(House::class);
+    }
 }
