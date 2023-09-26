@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\House;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,7 +25,8 @@ class HouseController extends Controller
      */
     public function create()
     {
-        //
+        $services = Service::all();
+        return view("admin.houses.create", compact('services'));
     }
 
     /**
@@ -32,7 +34,7 @@ class HouseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return to_route("admin.houses.show");
     }
 
     /**
