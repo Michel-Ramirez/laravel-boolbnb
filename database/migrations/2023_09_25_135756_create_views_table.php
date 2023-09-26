@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('views', function (Blueprint $table) {
             $table->id();
             $table->foreignId("house_id")->nullable()->constrained()->nullOnDelete();
-            $table->dateTime("view_date");
             $table->string("ip_viewer");
             $table->timestamps();
         });
