@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string("type");
             $table->text("description");
             $table->float("night_price", 9, 2);
-            $table->tinyInteger("total_bath");
-            $table->tinyInteger("total_rooms");
-            $table->tinyInteger("total_beds");
+            $table->unsignedTinyInteger("total_bath");
+            $table->unsignedTinyInteger("total_rooms");
+            $table->unsignedTinyInteger("total_beds");
             $table->smallInteger("mq");
             $table->string("photo");
             $table->boolean("is_published")->default(0);
