@@ -113,7 +113,7 @@ class HouseController extends Controller
         }
 
 
-        return to_route("user.houses.show", $house);
+        return to_route("user.houses.index");
     }
 
     /**
