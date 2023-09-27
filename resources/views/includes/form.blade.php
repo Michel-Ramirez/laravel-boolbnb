@@ -1,114 +1,155 @@
-<div class="container">
-  <h1 class="my-5 text-center">Inserisci i campi richiesti</h1>
-  <form action="{{ route('user.houses.store') }}" method="POST" id="form-houses" enctype="multipart/form-data">
-    @csrf
-    <div class="row">
-      {{-- Name --}}
-      <div class="col-6">
-        <div class="mb-3">
-          <label for="name" class="form-label">Nome struttura</label>
-          <input type="text" class="form-control" id="name" name="name"
-            placeholder="Inserisci il nome della casa">
-        </div>
-      </div>
-      {{-- Structure type --}}
-      <div class="col-6">
-        <div class="mb-3">
-          <label for="type" class="form-label">Tipo di struttura</label>
-          <select class="form-select" id="type" name="type">
-            <option>Villa</option>
-            <option>Villa a schiera</option>
-            <option>Appartamento</option>
-            <option>Hotel</option>
-          </select>
-        </div>
-      </div>
-      {{-- Address --}}
-      <div class="col-12">
-        <div class="mb-3">
-          <label for="address" class="form-label">Indirizzo</label>
-          <input type="text" class="form-control" id="address" name="home_address"
-            placeholder="Es. Via Francesco Benaglia, 13, 00153 Roma">
-        </div>
-      </div>
-      <input class="d-none" type="text" id="latitude" name="latitude">
-      <input class="d-none" type="text" id="longitude" name="longitude">
-      {{-- Price per night --}}
-      <div class="col">
-        <div class="mb-3">
-          <label for="price" class="form-label">Prezzo per notte</label>
-          <input type="number" step="0.01" class="form-control" id="price" name="night_price">
-        </div>
-      </div>
-      {{-- Bath numb --}}
-      <div class="col">
-        <div class="mb-3">
-          <label for="bath" class="form-label">Numero bagni</label>
-          <input type="number" class="form-control" id="bath" name="total_bath">
-        </div>
-      </div>
-      {{-- Rooms numb --}}
-      <div class="col">
-        <div class="mb-3">
-          <label for="rooms" class="form-label">Numero camere</label>
-          <input type="number" class="form-control" id="rooms" name="total_rooms">
-        </div>
-      </div>
-      {{-- Beds Numb --}}
-      <div class="col">
-        <div class="mb-3">
-          <label for="beds" class="form-label">Numero posti letto</label>
-          <input type="number" class="form-control" id="beds" name="total_beds">
-        </div>
-      </div>
-      {{-- MQ --}}
-      <div class="col">
-        <div class="mb-3">
-          <label for="mq" class="form-label">Metri quadri</label>
-          <input type="number" class="form-control" id="mq" name="mq">
-        </div>
-      </div>
-      {{-- Description --}}
-      <div class="col-12">
-        <div class="mb-3">
-          <label for="description" class="form-label">Descrizione della struttura</label>
-          <textarea class="form-control" id="description" name="description" rows="5"></textarea>
-        </div>
-      </div>
-      {{-- Photo --}}
-      <div class="col-6">
-        <div class="mb-3">
-          <label for="photo" class="form-label">Inserisci l'immagine della casa</label>
-          <input class="form-control" type="file" id="photo" name="photo">
-        </div>
-      </div>
-      {{-- Is Publish --}}
-      <div class="col-12 mt-3">
-        <div class="form-check form-switch">
-          <label class="form-check-label" for="published">Pubblica</label>
-          <input class="form-check-input" type="checkbox" role="switch" id="published">
-        </div>
-      </div>
-      {{-- Services --}}
-      <h2 class="text-center">Servizi aggiuntivi</h2>
-      <div class="col-12 d-flex gap-3 flex-wrap mt-4">
-        @foreach ($services as $service)
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="{{ $service->id }}"
-              id="service-{{ $service->id }}" name="service[]">
-            <label class="form-check-label" for="service-{{ $service->id }}">
-              {{ $service->name }}
-            </label>
-          </div>
-        @endforeach
-      </div>
-      <div class="col-12 d-flex justify-content-between mt-5">
-        <a class="btn btn-secondary" href="{{ route('user.houses.index') }}">Torna Indietro</a>
-        <button class="btn btn-success">Aggiungi</button>
-      </div>
+@csrf
+<div class="row">
+  {{-- Name --}}
+  <div class="col-6">
+    <div class="mb-3">
+      <label for="name" class="form-label">Nome struttura</label>
+      <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
+        value="{{ old('name') }}" placeholder="Inserisci il nome della casa">
+      @error('name')
+        <div class="invalid-feedback">{{ $message }}</div>
+      @enderror
     </div>
-  </form>
+  </div>
+  {{-- Structure type --}}
+  <div class="col-6">
+    <div class="mb-3">
+      <label for="type" class="form-label">Tipo di struttura</label>
+      <select class="form-select @error('type') is-invalid @enderror" id="type" name="type">
+        <option @if (old('type') == 'Villa') selected @endif>Villa</option>
+        <option @if (old('type') == 'Villa a schiera') selected @endif>Villa a schiera</option>
+        <option @if (old('type') == 'Appartamento') selected @endif>Appartamento</option>
+        <option @if (old('type') == 'Hotel') selected @endif>Hotel</option>
+      </select>
+      @error('type')
+        <div class="invalid-feedback">{{ $message }}</div>
+      @enderror
+    </div>
+  </div>
+  {{-- Address --}}
+  <div class="col-12">
+    <div class="mb-3">
+      <label for="address" class="form-label">Indirizzo</label>
+      <input type="text" class="form-control @error('home_address') is-invalid @enderror" id="address"
+        name="home_address" value="{{ old('home_address') }}" placeholder="Es. Via Francesco Benaglia, 13, 00153 Roma">
+      @error('home_address')
+        <div class="invalid-feedback">{{ $message }}</div>
+      @enderror
+    </div>
+  </div>
+  <input class="d-none" type="text" id="latitude" name="latitude">
+  <input class="d-none" type="text" id="longitude" name="longitude">
+  {{-- Price per night --}}
+  <div class="col">
+    <div class="mb-3">
+      <label for="price" class="form-label">Prezzo per notte</label>
+      <input type="number" step="0.01" class="form-control @error('night_price') is-invalid @enderror"
+        id="price" name="night_price" value="{{ old('night_price') }}">
+      @error('night_price')
+        <div class="invalid-feedback">{{ $message }}</div>
+      @enderror
+    </div>
+  </div>
+  {{-- Bath numb --}}
+  <div class="col">
+    <div class="mb-3">
+      <label for="bath" class="form-label">Numero bagni</label>
+      <input type="number" class="form-control @error('total_bath') is-invalid @enderror" id="bath"
+        name="total_bath" value="{{ old('total_bath') }}">
+      @error('total_bath')
+        <div class="invalid-feedback">{{ $message }}</div>
+      @enderror
+    </div>
+  </div>
+  {{-- Rooms numb --}}
+  <div class="col">
+    <div class="mb-3">
+      <label for="rooms" class="form-label">Numero camere</label>
+      <input type="number" class="form-control @error('total_rooms') is-invalid @enderror" id="rooms"
+        name="total_rooms" value="{{ old('total_rooms') }}">
+      @error('total_rooms')
+        <div class="invalid-feedback">{{ $message }}</div>
+      @enderror
+    </div>
+  </div>
+  {{-- Beds Numb --}}
+  <div class="col">
+    <div class="mb-3">
+      <label for="beds" class="form-label">Numero posti letto</label>
+      <input type="number" class="form-control @error('total_beds') is-invalid @enderror" id="beds"
+        name="total_beds" value="{{ old('total_beds') }}">
+      @error('total_beds')
+        <div class="invalid-feedback">{{ $message }}</div>
+      @enderror
+    </div>
+  </div>
+  {{-- MQ --}}
+  <div class="col">
+    <div class="mb-3">
+      <label for="mq" class="form-label">Metri quadri</label>
+      <input type="number" class="form-control @error('mq') is-invalid @enderror" id="mq" name="mq"
+        value="{{ old('mq') }}">
+      @error('mq')
+        <div class="invalid-feedback">{{ $message }}</div>
+      @enderror
+    </div>
+  </div>
+  {{-- Description --}}
+  <div class="col-12">
+    <div class="mb-3">
+      <label for="description" class="form-label">Descrizione della struttura</label>
+      <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
+        rows="5">{{ old('description') }}</textarea>
+      @error('description')
+        <div class="invalid-feedback">{{ $message }}</div>
+      @enderror
+    </div>
+  </div>
+  {{-- Photo --}}
+  <div class="col-6">
+    <div class="mb-3">
+      <label for="photo" class="form-label">Inserisci l'immagine della casa</label>
+      <input class="form-control @error('photo') is-invalid @enderror" type="file" id="photo"
+        name="photo">
+      @error('photo')
+        <div class="invalid-feedback">{{ $message }}</div>
+      @enderror
+    </div>
+  </div>
+  {{-- Is Publish --}}
+  <div class="col-12 mt-3">
+    <div class="form-check form-switch">
+      <label class="form-check-label" for="published">Pubblica</label>
+      <input class="form-check-input @error('is_published') is-invalid @enderror" name="is_published"
+        type="checkbox" role="switch" id="published" value="{{ old('is_published') }}">
+      @error('is_published')
+        <div class="invalid-feedback">{{ $message }}</div>
+      @enderror
+    </div>
+  </div>
+  {{-- Services --}}
+  <h2 class="text-center">Servizi aggiuntivi</h2>
+  <div class="col-12 d-flex gap-3 flex-wrap mt-4">
+    @foreach ($services as $service)
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="{{ $service->id }}"
+          id="service-{{ $service->id }}" name="service[]" @if (in_array($service->id, old('service', []))) checked @endif>
+        <label class="form-check-label" for="service-{{ $service->id }}">
+          {{ $service->name }}
+        </label>
+      </div>
+    @endforeach
+    @error('service')
+      <div class="text-danger">{{ $message }}</div>
+    @enderror
+  </div>
+  <div class="col-12 d-flex justify-content-between my-5">
+    <a class="btn btn-secondary" href="{{ route('user.houses.index') }}">Torna Indietro</a>
+    <button class="btn btn-success">Aggiungi</button>
+  </div>
 </div>
+
+
 
 
 @vite(['resources/js/scriptAddress.js'])

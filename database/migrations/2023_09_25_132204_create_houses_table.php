@@ -22,8 +22,8 @@ return new class extends Migration
             $table->unsignedTinyInteger("total_bath");
             $table->unsignedTinyInteger("total_rooms");
             $table->unsignedTinyInteger("total_beds");
-            $table->smallInteger("mq");
-            $table->string("photo");
+            $table->smallInteger("mq")->nullable();
+            $table->string("photo")->nullable();
             $table->boolean("is_published")->default(0);
             $table->timestamps();
             $table->softDeletes();

@@ -22,6 +22,7 @@ form.addEventListener("submit", () => {
         form.submit();
     }).catch((e)=> {
         console.error(e);
+        form.submit();
     })
 })
 

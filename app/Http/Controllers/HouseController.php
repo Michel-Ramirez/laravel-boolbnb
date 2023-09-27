@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class HouseController extends Controller
 {
@@ -38,6 +39,40 @@ class HouseController extends Controller
      */
     public function store(Request $request)
     {
+
+        // Validation
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'type' => ['string', 'required', Rule::in(['Villa', 'Villa a schiera', 'Appartamento', 'Hotel'])],
+            'description' => 'required|string',
+            'night_price' => 'required|numeric',
+            'total_bath' => 'required|numeric',
+            'total_rooms' => 'required|numeric',
+            'total_beds' => 'required|numeric',
+            'mq' => 'numeric|nullable',
+            'photo' => 'image|nullable',
+            'is_published' => 'boolean|nullable',
+            'home_address' => 'required|string',
+            'service' => 'exists:services,id',
+        ], [
+            'name.required' => 'Il campo nome è obbligatorio',
+            'name.max' => 'Il campo nome può avere un massimo di 255 caratteri',
+            'type.required' => 'Il tipo di struttura è obbligatoria',
+            'type.in' => 'Il tipo di struttura deve essere tra quelli indicati',
+            'description.required' => 'La descrizione è obbligatoria',
+            'night_price.numeric' => 'Il prezzo deve essere un numero',
+            'night_price.required' => 'Il prezzo è obbligatorio',
+            'total_bath.numeric' => 'Il totale dei bagni deve essere un numero',
+            'total_bath.required' => 'Il totale dei bagni è obbligatorio',
+            'total_rooms.numeric' => 'Il totale delle camere deve essere un numero',
+            'total_rooms.required' => 'Il totale delle camere è obbligatorio',
+            'mq.numeric' => 'La metratura della casa deve essere un numero',
+            'is_published.boolean' => 'Il valore di pubblica è errato',
+            'home_address.required' => "L'indirizzo della casa è obbligatorio",
+            'service.exists' => 'Uno o più servizi selezionati non sono validi'
+        ]);
+
+
         // Take data
         $data = $request->all();
 
@@ -61,6 +96,11 @@ class HouseController extends Controller
             $data['photo'] = $photo_path;
         }
 
+        // Add is published
+        if (array_key_exists('is_published', $data)) {
+            $house->is_published = true;
+        }
+
         // Fill House
         $house->fill($data);
 
@@ -73,7 +113,7 @@ class HouseController extends Controller
         }
 
 
-        // return to_route("admin.houses.create");
+        return to_route("user.houses.show", $house);
     }
 
     /**
