@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Models\House;
 use App\Models\Service;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -122,7 +123,10 @@ class HouseController extends Controller
      */
     public function show(House $house)
     {
-        //
+        $lastSponsorEnd = $house->sponsors()->latest('sponsor_end')->first();
+        $sponsorEnd = $lastSponsorEnd->pivot->sponsor_end;
+        $sponsorEndDate = Carbon::parse($sponsorEnd)->format('d/m/Y');
+        return view('admin.houses.show', compact('house', 'sponsorEndDate'));
     }
 
     /**

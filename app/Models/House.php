@@ -52,6 +52,6 @@ class House extends Model
 
     public function sponsors()
     {
-        return $this->belongsToMany(Sponsor::class);
+        return $this->belongsToMany(Sponsor::class)->withPivot('sponsor_start', 'sponsor_end');
     }
 }
