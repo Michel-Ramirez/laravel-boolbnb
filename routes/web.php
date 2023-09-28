@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::prefix("/user")->middleware(["auth"])->name("user.")->group(function () {
+    Route::get('/houses/trash', [HouseController::class, 'trash'])->name('houses.trash');
     Route::resource("houses", HouseController::class);
 });
 

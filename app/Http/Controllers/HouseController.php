@@ -145,6 +145,13 @@ class HouseController extends Controller
      */
     public function destroy(House $house)
     {
-        //
+        $house->delete();
+        return to_route("user.houses.index")->with('type', 'delete')->with('message', 'Casa cancellata con successo')->with('alert', 'success');
+    }
+
+    public function trash(House $house)
+    {
+        $houses = House::onlyTrashed()->get();
+        return view('admin.houses.trash', compact('houses'));
     }
 }
