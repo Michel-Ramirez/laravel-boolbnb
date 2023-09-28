@@ -54,7 +54,7 @@ class HouseController extends Controller
             'photo' => 'image|nullable',
             'is_published' => 'boolean|nullable',
             'home_address' => 'required|string',
-            'service' => 'exists:services,id',
+            'service' => 'required|exists:services,id',
         ], [
             'name.required' => 'Il campo nome è obbligatorio',
             'name.max' => 'Il campo nome può avere un massimo di 255 caratteri',
@@ -70,6 +70,7 @@ class HouseController extends Controller
             'mq.numeric' => 'La metratura della casa deve essere un numero',
             'is_published.boolean' => 'Il valore di pubblica è errato',
             'home_address.required' => "L'indirizzo della casa è obbligatorio",
+            'service.required' => 'La casa deve avere almeno un servizio',
             'service.exists' => 'Uno o più servizi selezionati non sono validi'
         ]);
 
@@ -149,6 +150,23 @@ class HouseController extends Controller
      */
     public function destroy(House $house)
     {
-        //
+        $house->delete();
+        return to_route("user.houses.index")->with('type', 'delete')->with('message', 'Casa cancellata con successo')->with('alert', 'success');
+    }
+
+    public function trash(House $house)
+    {
+        $houses = House::onlyTrashed()->get();
+
+        return view('admin.houses.trash', compact('houses'));
+    }
+
+    public function restore(string $id)
+    {
+        $house = House::onlyTrashed()->findOrFail($id);
+
+        $house->restore();
+
+        return to_route('user.houses.trash')->with('type', 'restore')->with('message', 'Casa recuperata con successo')->with('alert', 'success');
     }
 }
