@@ -27,6 +27,15 @@
                                 ND
                             @endif
                         </td>
+                        <td>
+                            <div class="d-flex justify-content-end gap-2">
+                                <form action="{{ route('user.houses.restore', $house->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button class="btn btn-success">ripristina</button>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                 @empty
                     <td colspan="5">

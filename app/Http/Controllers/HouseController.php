@@ -152,6 +152,16 @@ class HouseController extends Controller
     public function trash(House $house)
     {
         $houses = House::onlyTrashed()->get();
+
         return view('admin.houses.trash', compact('houses'));
+    }
+
+    public function restore(string $id)
+    {
+        $house = House::onlyTrashed()->findOrFail($id);
+
+        $house->restore();
+
+        return to_route('user.houses.trash')->with('type', 'restore')->with('message', 'Casa recuperata con successo')->with('alert', 'success');
     }
 }
