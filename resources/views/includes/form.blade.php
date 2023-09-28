@@ -30,12 +30,16 @@
     <div class="col-12">
         <div class="mb-3">
             <label for="address" class="form-label">Indirizzo</label>
-            <input type="text" class="form-control @error('home_address') is-invalid @enderror" id="address"
-                name="home_address" value="{{ old('home_address') }}"
+            <input type="text" class="form-control rounded-0 rounded-top @error('home_address') is-invalid @enderror"
+                id="address" name="home_address" value="{{ old('home_address') }}"
                 placeholder="Es. Via Francesco Benaglia, 13, 00153 Roma">
             @error('home_address')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
+            <div class="card rounded-0 d-none" id="container-list-address">
+                <ul class="list-group list-group-flush" id="list-address">
+                </ul>
+            </div>
         </div>
     </div>
     <input class="d-none" type="text" id="latitude" name="latitude">
