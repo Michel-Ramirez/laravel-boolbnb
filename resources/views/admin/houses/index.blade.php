@@ -20,7 +20,13 @@
                         <th scope="row">{{ $house->name }}</th>
                         <td>{{ $house->type }}</td>
                         <td>{{ $house->night_price }}</td>
-                        <td>{{ $house->mq }}</td>
+                        <td>
+                            @if ($house->mq)
+                                {{ $house->mq }} mq
+                            @else
+                                ND
+                            @endif
+                        </td>
                         <td>
                             <div class="d-flex justify-content-end gap-2">
                                 <a href="#" class="btn btn-warning">Modifica</a>
