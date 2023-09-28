@@ -53,7 +53,7 @@ class HouseController extends Controller
             'photo' => 'image|nullable',
             'is_published' => 'boolean|nullable',
             'home_address' => 'required|string',
-            'service' => 'exists:services,id',
+            'service' => 'required|exists:services,id',
         ], [
             'name.required' => 'Il campo nome è obbligatorio',
             'name.max' => 'Il campo nome può avere un massimo di 255 caratteri',
@@ -69,6 +69,7 @@ class HouseController extends Controller
             'mq.numeric' => 'La metratura della casa deve essere un numero',
             'is_published.boolean' => 'Il valore di pubblica è errato',
             'home_address.required' => "L'indirizzo della casa è obbligatorio",
+            'service.required' => 'La casa deve avere almeno un servizio',
             'service.exists' => 'Uno o più servizi selezionati non sono validi'
         ]);
 

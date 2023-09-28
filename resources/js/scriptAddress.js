@@ -27,7 +27,7 @@ inputAddress.addEventListener("keyup", () => {
         // Faccio una chiamata per autocomplete
         axios
             .get(
-                `https://api.tomtom.com/search/2/search/${addressValue}.json?limit=5&countrySet=IT%2FITA&extendedPostalCodesFor=Addr&view=Unified&key=soH7vSRFYTpCT37GOm8wEimPoDyc3GMe`
+                `https://api.tomtom.com/search/2/search/${addressValue}.json?limit=5&countrySet=IT&extendedPostalCodesFor=Addr&view=Unified&key=soH7vSRFYTpCT37GOm8wEimPoDyc3GMe`
             )
             // Se mi arriva la risposta
             .then((res) => {
@@ -38,10 +38,19 @@ inputAddress.addEventListener("keyup", () => {
                 // creo gli li
                 res.data.results.forEach((result, i) => {
                     containerListAddress.classList.remove("d-none");
-                    const lists = document.createElement("li");
-                    lists.classList.add("list-group-item");
-                    lists.innerHTML = result.address.freeformAddress;
-                    listAddress.append(lists);
+                    const list = document.createElement("li");
+                    list.className =
+                        "list-group-item list-group-item-action cursor-pointer";
+                    list.innerHTML = result.address.freeformAddress;
+                    listAddress.append(list);
+                    list.addEventListener("click", () => {
+                        const listValue = list.innerText;
+                        inputAddress.value = listValue;
+                        while (listAddress.firstChild) {
+                            listAddress.removeChild(listAddress.firstChild);
+                            containerListAddress.classList.add("d-none");
+                        }
+                    });
                 });
             })
             // Se c'è un errore
