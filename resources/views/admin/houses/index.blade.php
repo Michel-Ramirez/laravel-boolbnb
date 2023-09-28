@@ -30,7 +30,7 @@
                         <td>
                             <div class="d-flex justify-content-end gap-2">
                                 <a href="#" class="btn btn-warning">Modifica</a>
-                                <a href="#" class="btn btn-info">Dettaglio</a>
+                                <a href="{{ route('user.houses.show', $house) }}" class="btn btn-info">Dettaglio</a>
                                 <form action="{{ route('user.houses.destroy', $house) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
