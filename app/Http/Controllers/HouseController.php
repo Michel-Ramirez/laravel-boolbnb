@@ -113,7 +113,7 @@ class HouseController extends Controller
         }
 
 
-        return to_route("user.houses.index");
+        return to_route("user.houses.index")->with('type', 'create')->with('message', 'Casa inserita con successo')->with('alert', 'success');
     }
 
     /**
