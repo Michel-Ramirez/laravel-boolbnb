@@ -32,7 +32,8 @@ class HouseController extends Controller
     public function create()
     {
         $services = Service::all();
-        return view("admin.houses.create", compact('services'));
+        $house = new House();
+        return view("admin.houses.create", compact('services', 'house'));
     }
 
     /**
@@ -123,6 +124,12 @@ class HouseController extends Controller
      */
     public function show(House $house)
     {
+        // Control if the log user is same of the house user
+        $user = Auth::id();
+        if ($house->user_id != $user) {
+            return to_route('user.houses.index');
+        };
+
         $lastSponsorEnd = $house->sponsors()->latest('sponsor_end')->first();
         $sponsorEnd = $lastSponsorEnd->pivot->sponsor_end;
         $sponsorEndDate = Carbon::parse($sponsorEnd)->format('d/m/Y');
@@ -134,7 +141,23 @@ class HouseController extends Controller
      */
     public function edit(House $house)
     {
-        //
+        // Control if the log user is same of the house user
+        $user = Auth::id();
+        if ($house->user_id != $user) {
+            return to_route('user.houses.index');
+        };
+
+        // Take all services
+        $services = Service::all();
+
+        // Take only the id of the house services
+        $servicesArray = $house->services;
+        $servicesIdArray = [];
+        foreach ($servicesArray as $service) {
+            $servicesIdArray[] = $service->id;
+        };
+
+        return view('admin.houses.edit', compact('house', 'services', 'servicesIdArray'));
     }
 
     /**
@@ -142,7 +165,63 @@ class HouseController extends Controller
      */
     public function update(Request $request, House $house)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'type' => ['string', 'required', Rule::in(['Villa', 'Villa a schiera', 'Appartamento', 'Hotel'])],
+            'description' => 'required|string',
+            'night_price' => 'required|numeric',
+            'total_bath' => 'required|numeric',
+            'total_rooms' => 'required|numeric',
+            'total_beds' => 'required|numeric',
+            'mq' => 'numeric|nullable',
+            'photo' => 'image|nullable',
+            'is_published' => 'boolean|nullable',
+            'home_address' => 'required|string',
+            'service' => 'required|exists:services,id',
+        ], [
+            'name.required' => 'Il campo nome è obbligatorio',
+            'name.max' => 'Il campo nome può avere un massimo di 255 caratteri',
+            'type.required' => 'Il tipo di struttura è obbligatoria',
+            'type.in' => 'Il tipo di struttura deve essere tra quelli indicati',
+            'description.required' => 'La descrizione è obbligatoria',
+            'night_price.numeric' => 'Il prezzo deve essere un numero',
+            'night_price.required' => 'Il prezzo è obbligatorio',
+            'total_bath.numeric' => 'Il totale dei bagni deve essere un numero',
+            'total_bath.required' => 'Il totale dei bagni è obbligatorio',
+            'total_rooms.numeric' => 'Il totale delle camere deve essere un numero',
+            'total_rooms.required' => 'Il totale delle camere è obbligatorio',
+            'mq.numeric' => 'La metratura della casa deve essere un numero',
+            'is_published.boolean' => 'Il valore di pubblica è errato',
+            'home_address.required' => "L'indirizzo della casa è obbligatorio",
+            'service.required' => 'La casa deve avere almeno un servizio',
+            'service.exists' => 'Uno o più servizi selezionati non sono validi'
+        ]);
+
+        $data = $request->all();
+
+        // Added image in project
+        if (array_key_exists('photo', $data)) {
+            if ($house->image) Storage::delete($house->image);
+            $photo_path = Storage::putFile('house_img', $data['photo']);
+            $data['photo'] = $photo_path;
+        };
+
+        // Add is published
+        if (array_key_exists('is_published', $data)) {
+            $house->is_published = true;
+        };
+
+        // Update House
+        $house->update($data);
+
+        // Update Services
+        if (!array_key_exists('service', $data) && count($house->services)) {
+            $house->services()->detach();
+        } elseif (array_key_exists('service', $data)) {
+            $house->services()->sync($data['service']);
+        }
+
+        return to_route('user.houses.show', $house);
     }
 
     /**

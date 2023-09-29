@@ -21,10 +21,6 @@ return [
         "icon" => "fa-solid fa-kitchen-set",
     ],
     [
-        "name" => "Cucina",
-        "icon" => "fa-solid fa-kitchen-set",
-    ],
-    [
         "name" => "Parcheggio gratuito",
         "icon" => "fa-solid fa-square-parking",
     ],
