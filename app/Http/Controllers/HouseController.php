@@ -258,7 +258,7 @@ class HouseController extends Controller
             $house->services()->sync($data['service']);
         }
 
-        return to_route('user.houses.show', $house);
+        return to_route('user.houses.show', $house)->with('type', 'update')->with('message', 'Casa modificata con successo')->with('alert', 'success');
     }
 
     /**

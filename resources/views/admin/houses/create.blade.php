@@ -11,4 +11,5 @@
 
 @section('scripts')
     @vite(['resources/js/scriptAddress.js'])
+    @vite(['resources/js/scriptPreview.js'])
 @endsection
