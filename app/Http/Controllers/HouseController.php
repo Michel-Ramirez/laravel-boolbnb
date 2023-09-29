@@ -47,11 +47,11 @@ class HouseController extends Controller
             'name' => 'required|string|max:255',
             'type' => ['string', 'required', Rule::in(['Villa', 'Villa a schiera', 'Appartamento', 'Hotel'])],
             'description' => 'required|string',
-            'night_price' => 'required|numeric',
-            'total_bath' => 'required|numeric',
-            'total_rooms' => 'required|numeric',
-            'total_beds' => 'required|numeric',
-            'mq' => 'numeric|nullable',
+            'night_price' => 'required|numeric|max:9999999',
+            'total_bath' => 'required|numeric|max:255',
+            'total_rooms' => 'required|numeric|max:255',
+            'total_beds' => 'required|numeric|max:255',
+            'mq' => 'numeric|nullable|max:32000',
             'photo' => 'image|nullable',
             'is_published' => 'boolean|nullable',
             'home_address' => 'required|string',
@@ -64,10 +64,17 @@ class HouseController extends Controller
             'description.required' => 'La descrizione è obbligatoria',
             'night_price.numeric' => 'Il prezzo deve essere un numero',
             'night_price.required' => 'Il prezzo è obbligatorio',
+            'night_price.max' => 'Il prezzo non può essere superiore 9999999',
+            'total_bath.max' => 'Il totale dei bagni non può essere maggiore di 255',
             'total_bath.numeric' => 'Il totale dei bagni deve essere un numero',
             'total_bath.required' => 'Il totale dei bagni è obbligatorio',
+            'total_rooms.max' => 'Il totale delle camere non può essere superiore di 255',
             'total_rooms.numeric' => 'Il totale delle camere deve essere un numero',
             'total_rooms.required' => 'Il totale delle camere è obbligatorio',
+            "total_beds.max" => 'Il totale dei posti letto non può essere superiore di 255',
+            "total_beds.numeric" => 'Il totale dei posti letto deve essere un numero',
+            "total_beds.required" => 'Il totale dei posti letto è obbligatorio',
+            "mq.max" => 'La metratura della casa non deve essere superiore a 32000mq',
             'mq.numeric' => 'La metratura della casa deve essere un numero',
             'is_published.boolean' => 'Il valore di pubblica è errato',
             'home_address.required' => "L'indirizzo della casa è obbligatorio",
@@ -169,11 +176,11 @@ class HouseController extends Controller
             'name' => 'required|string|max:255',
             'type' => ['string', 'required', Rule::in(['Villa', 'Villa a schiera', 'Appartamento', 'Hotel'])],
             'description' => 'required|string',
-            'night_price' => 'required|numeric',
-            'total_bath' => 'required|numeric',
-            'total_rooms' => 'required|numeric',
-            'total_beds' => 'required|numeric',
-            'mq' => 'numeric|nullable',
+            'night_price' => 'required|numeric|max:9999999',
+            'total_bath' => 'required|numeric|max:255',
+            'total_rooms' => 'required|numeric|max:255',
+            'total_beds' => 'required|numeric|max:255',
+            'mq' => 'numeric|nullable|max:32000',
             'photo' => 'image|nullable',
             'is_published' => 'boolean|nullable',
             'home_address' => 'required|string',
@@ -186,10 +193,17 @@ class HouseController extends Controller
             'description.required' => 'La descrizione è obbligatoria',
             'night_price.numeric' => 'Il prezzo deve essere un numero',
             'night_price.required' => 'Il prezzo è obbligatorio',
+            'night_price.max' => 'Il prezzo non può essere superiore 9999999',
+            'total_bath.max' => 'Il totale dei bagni non può essere maggiore di 255',
             'total_bath.numeric' => 'Il totale dei bagni deve essere un numero',
             'total_bath.required' => 'Il totale dei bagni è obbligatorio',
+            'total_rooms.max' => 'Il totale delle camere non può essere superiore di 255',
             'total_rooms.numeric' => 'Il totale delle camere deve essere un numero',
             'total_rooms.required' => 'Il totale delle camere è obbligatorio',
+            "total_beds.max" => 'Il totale dei posti letto non può essere superiore di 255',
+            "total_beds.numeric" => 'Il totale dei posti letto deve essere un numero',
+            "total_beds.required" => 'Il totale dei posti letto è obbligatorio',
+            "mq.max" => 'La metratura della casa non deve essere superiore a 32000mq',
             'mq.numeric' => 'La metratura della casa deve essere un numero',
             'is_published.boolean' => 'Il valore di pubblica è errato',
             'home_address.required' => "L'indirizzo della casa è obbligatorio",
@@ -247,5 +261,12 @@ class HouseController extends Controller
         $house->restore();
 
         return to_route('user.houses.trash')->with('type', 'restore')->with('message', 'Casa recuperata con successo')->with('alert', 'success');
+    }
+
+    public function drop(string $id)
+    {
+        $house = House::onlyTrashed()->findOrFail($id);
+        $house->forceDelete();
+        return to_route("user.houses.trash");
     }
 }
