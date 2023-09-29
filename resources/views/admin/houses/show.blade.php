@@ -45,14 +45,21 @@
                             @endforeach
                         </div>
                     </li>
-                    <li class="list-group-item">La sponsorizzazione scade: {{ $sponsorEndDate }}
-                        <div class="text-end">
-                            @if ($house->is_published)
-                                <h5>L'appartamento è Pubblicato</h5>
-                            @else
-                                <h5 class="text-danger">L'appartamento non è Pubblicato</h5>
-                            @endif
-                        </div>
+                    @if ($sponsorEndDate)
+                        <li class="list-group-item">La Sponsorizzazione scade: {{ $sponsorEndDate }}
+                        @else
+                        <li class="list-group-item">Non ci sono Sponsorizzazioni
+                    @endif
+                    <div class="text-end">
+                        @if ($house->is_published)
+                            <h5>L'appartamento è Pubblicato</h5>
+                        @else
+                            <h5 class="text-danger">L'appartamento non è Pubblicato</h5>
+                        @endif
+                    </div>
+                    </li>
+                    <li class=" list-group-item">
+                        <a class="btn btn-secondary" href="{{ route('user.houses.index') }}">Torna Indietro</a>
                     </li>
                 </ul>
             </div>
