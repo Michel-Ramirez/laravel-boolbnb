@@ -131,8 +131,13 @@ class HouseController extends Controller
         };
 
         $lastSponsorEnd = $house->sponsors()->latest('sponsor_end')->first();
-        $sponsorEnd = $lastSponsorEnd->pivot->sponsor_end;
-        $sponsorEndDate = Carbon::parse($sponsorEnd)->format('d/m/Y');
+        $sponsorEndDate = null;
+        if ($lastSponsorEnd) {
+            $sponsorEnd = $lastSponsorEnd->pivot->sponsor_end;
+            $sponsorEndDate = Carbon::parse($sponsorEnd)->format('d/m/Y');
+        }
+        // $sponsorEnd = $lastSponsorEnd->pivot->sponsor_end;
+        // $sponsorEndDate = Carbon::parse($sponsorEnd)->format('d/m/Y');
         return view('admin.houses.show', compact('house', 'sponsorEndDate'));
     }
 
