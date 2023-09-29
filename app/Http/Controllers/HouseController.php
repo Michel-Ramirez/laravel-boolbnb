@@ -228,10 +228,28 @@ class HouseController extends Controller
         // Add is published
         if (array_key_exists('is_published', $data)) {
             $house->is_published = true;
+        } else {
+            $house->is_published = false;
         };
+
+
+        // Take old address in database
+        $oldAddress = $house->address;
+
+
+        // Add Address
+        $address = new Address();
+        $address->home_address = $data['home_address'];
+        $address->latitude = $data['latitude'];
+        $address->longitude = $data['longitude'];
+        $address->save();
+        $house->address_id = $address->id;
 
         // Update House
         $house->update($data);
+
+        // Delete old address in database
+        $oldAddress->delete();
 
         // Update Services
         if (!array_key_exists('service', $data) && count($house->services)) {
