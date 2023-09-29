@@ -32,8 +32,13 @@
                                 <form action="{{ route('user.houses.restore', $house->id) }}" method="POST">
                                     @csrf
                                     @method('PATCH')
-                                    <button class="btn btn-success">ripristina</button>
+                                    <button class="btn btn-success">Ripristina</button>
                                 </form>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#modal-{{ $house->id }}">
+                                    Elimina casa
+                                </button>
+                                @include('includes.trash.modal')
                             </div>
                         </td>
                     </tr>
