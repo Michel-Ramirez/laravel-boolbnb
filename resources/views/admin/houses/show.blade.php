@@ -58,6 +58,9 @@
                         @endif
                     </div>
                     </li>
+                    <li class=" list-group-item">
+                        <a class="btn btn-secondary" href="{{ route('user.houses.index') }}">Torna Indietro</a>
+                    </li>
                 </ul>
             </div>
         </div>
