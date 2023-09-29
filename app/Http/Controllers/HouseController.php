@@ -220,7 +220,7 @@ class HouseController extends Controller
 
         // Added image in project
         if (array_key_exists('photo', $data)) {
-            if ($house->image) Storage::delete($house->image);
+            if ($house->photo) Storage::delete($house->photo);
             $photo_path = Storage::putFile('house_img', $data['photo']);
             $data['photo'] = $photo_path;
         };
@@ -289,6 +289,7 @@ class HouseController extends Controller
     public function drop(string $id)
     {
         $house = House::onlyTrashed()->findOrFail($id);
+        if ($house->photo) Storage::delete($house->photo);
         $house->forceDelete();
         return to_route("user.houses.trash");
     }
