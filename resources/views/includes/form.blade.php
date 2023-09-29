@@ -165,8 +165,3 @@
         <button class="btn btn-success">Aggiungi</button>
     </div>
 </div>
-
-
-
-
-@vite(['resources/js/scriptAddress.js'])

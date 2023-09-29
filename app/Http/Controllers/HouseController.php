@@ -274,4 +274,19 @@ class HouseController extends Controller
         $house->forceDelete();
         return to_route("user.houses.trash");
     }
+
+    public function publish(Request $request, House $house)
+    {
+        $data = $request->all();
+        if (array_key_exists('is_published', $data)) {
+            $house->is_published = true;
+            $house->save();
+            $message = "Casa pubblicata con successo";
+        } elseif (!array_key_exists('is_published', $data) && $house->is_published == true) {
+            $house->is_published = false;
+            $house->save();
+            $message = "La casa è stata inserita nelle bozze ";
+        }
+        return to_route("user.houses.index")->with('type', 'edit')->with('message', $message)->with('alert', 'success');;
+    }
 }
