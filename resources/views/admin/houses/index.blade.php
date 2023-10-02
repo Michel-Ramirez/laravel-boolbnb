@@ -47,11 +47,12 @@
                             <div class="d-flex justify-content-end gap-2">
                                 <a href="{{ route('user.houses.edit', $house) }}" class="btn btn-warning">Modifica</a>
                                 <a href="{{ route('user.houses.show', $house) }}" class="btn btn-info">Dettaglio</a>
-                                <form action="{{ route('user.houses.destroy', $house) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger">Cancella</button>
-                                </form>
+
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#modal-{{ $house->id }}">
+                                    Elimina casa
+                                </button>
+                                @include('includes.trash.modal')
                             </div>
                         </td>
                     </tr>

@@ -11,10 +11,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                <form action="{{ route('user.houses.drop', $house->id) }}" method="post">
+                <form action="{{ route('user.houses.destroy', $house) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger">Cancella definitivamente</button>
+                    <button class="btn btn-danger">Cancella</button>
                 </form>
             </div>
         </div>
