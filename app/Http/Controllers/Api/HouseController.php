@@ -24,7 +24,7 @@ class HouseController extends Controller
         // Giro su tutte le case
         foreach ($houses as $house) {
             if ($house->photo) {
-                $house->photo = url("storage/" . $house->photo);
+                $house["photo"] = url("storage/" . $house->photo);
             }
 
             // Controllo se la casa ha una sponsorizzazione
