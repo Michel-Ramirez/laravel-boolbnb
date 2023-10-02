@@ -38,6 +38,7 @@
             @error('home_address')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
+            <div class="d-none" id="invalid-address"></div>
             <div class="card rounded-0 d-none" id="container-list-address">
                 <ul class="list-group list-group-flush" id="list-address">
                 </ul>
@@ -151,7 +152,7 @@
     <div class="col-12 d-flex gap-3 flex-wrap mt-4">
         @foreach ($services as $service)
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="{{ $service->id }}"
+                <input class="form-check-input service-checkbox" type="checkbox" value="{{ $service->id }}"
                     id="service-{{ $service->id }}" name="service[]"
                     @if (in_array($service->id, old('service', $servicesIdArray ?? []))) checked @endif>
                 <label class="form-check-label" for="service-{{ $service->id }}">
@@ -163,6 +164,7 @@
     @error('service')
         <div class="text-danger mt-2">{{ $message }}</div>
     @enderror
+    <div class="d-none" id="invalid-services"></div>
     <div class="mt-4"><span class="text-danger">*</span> Campi obbligatori </div>
     {{-- Button --}}
     <div class="col-12 d-flex justify-content-between my-5">

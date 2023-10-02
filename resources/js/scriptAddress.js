@@ -4,13 +4,23 @@ const latitude = document.getElementById("latitude");
 const longitude = document.getElementById("longitude");
 const inputAddress = document.getElementById("address");
 const listAddress = document.getElementById("list-address");
+const invalidAddress = document.getElementById("invalid-address");
 const containerListAddress = document.getElementById("container-list-address");
+const invalidServices = document.getElementById("invalid-services");
+const servicesCheckbox = document.querySelectorAll(".service-checkbox");
+const dataFormType = form.dataset.type;
 
 // Creo una variabile d'appoggio per il timeout
 let searchAddress;
-
+let addressFlag;
+console.log(dataFormType);
+if (dataFormType == "create") addressFlag = false;
+else if (dataFormType == "edit") addressFlag = true;
 // Ascolto il keyup
 inputAddress.addEventListener("keyup", () => {
+    addressFlag = false;
+    invalidAddress.innerText = "";
+    address.classList.remove("is-invalid");
     // Prendo il valore dell input address
     const addressValue = address.value;
     // Controllo che non sia vuoto
@@ -46,6 +56,7 @@ inputAddress.addEventListener("keyup", () => {
                     list.addEventListener("click", () => {
                         const listValue = list.innerText;
                         inputAddress.value = listValue;
+                        addressFlag = true;
                         while (listAddress.firstChild) {
                             listAddress.removeChild(listAddress.firstChild);
                             containerListAddress.classList.add("d-none");
@@ -65,11 +76,40 @@ inputAddress.addEventListener("keyup", () => {
 form.addEventListener("submit", () => {
     // Blocco l'evento
     event.preventDefault();
+    // Vedo se almeno un servizio è checkato
+    let serviceChecked = false;
+    servicesCheckbox.forEach((serviceCheckbox) => {
+        if (serviceCheckbox.checked) serviceChecked = true;
+    });
+
+    // Se nessuno è checkato mando il messaggio di errore
+    if (serviceChecked == false) {
+        invalidServices.classList.remove("d-none");
+        invalidServices.classList.add("text-danger");
+        invalidServices.innerText =
+            "Almeno un servizio deve essere selezionato";
+        return;
+    }
+
     // Prendo il valore dell' input dell'address
     const addressValue = address.value;
 
     // Creo il config
     const config = { headers: { accept: "*/*" } };
+
+    // Vedo se l'indirizzo iserito non e quello consigliato
+    if (!addressFlag) {
+        address.classList.add("is-invalid");
+        invalidAddress.classList.remove("d-none");
+        invalidAddress.classList.add("text-danger");
+        invalidAddress.innerText =
+            "L'indirizzo deve essere scelto tra quelli consigliati.";
+        while (listAddress.firstChild) {
+            listAddress.removeChild(listAddress.firstChild);
+            containerListAddress.classList.add("d-none");
+        }
+        return;
+    }
     // Faccio una chiamata per ottenere la lat e long
     axios
         .get(
@@ -77,11 +117,15 @@ form.addEventListener("submit", () => {
             config
         )
         .then((res) => {
-            // le aggiungo nel form
+            // Le aggiungo nel form
             latitude.value = res.data.results[0].position.lat;
             longitude.value = res.data.results[0].position.lon;
-            // Invio il form
-            form.submit();
+            while (listAddress.firstChild) {
+                listAddress.removeChild(listAddress.firstChild);
+                containerListAddress.classList.add("d-none");
+            }
+            // Invio il form solo se l'utente clicca sull address consigliato e se almeno un servizio è stato inserito
+            if (addressFlag && serviceChecked) form.submit();
         })
         // Se c'è un errore
         .catch((e) => {
