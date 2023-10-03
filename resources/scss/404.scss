@@ -1,0 +1,31 @@
+.error-404 {
+    position: relative;
+    background-image: url("../../public/img/bgc-404-4.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-shadow: 0 3px black;
+    font-size: 3em;
+
+    .error-content {
+        z-index: 1;
+        text-align: center;
+    }
+
+    &::before {
+        content: "";
+        background: rgba(0, 0, 0, 0.7);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+body {
+    margin: 0;
+}
