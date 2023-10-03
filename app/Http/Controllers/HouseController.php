@@ -134,7 +134,7 @@ class HouseController extends Controller
         // Control if the log user is same of the house user
         $user = Auth::id();
         if ($house->user_id != $user) {
-            return to_route('user.houses.index');
+            return view('admin.houses.notAuth');
         };
 
         $lastSponsorEnd = $house->sponsors()->latest('sponsor_end')->first();
@@ -156,7 +156,7 @@ class HouseController extends Controller
         // Control if the log user is same of the house user
         $user = Auth::id();
         if ($house->user_id != $user) {
-            return to_route('user.houses.index');
+            return view('admin.houses.notAuth');
         };
 
         // Take all services
