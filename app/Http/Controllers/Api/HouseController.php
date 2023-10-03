@@ -15,40 +15,22 @@ class HouseController extends Controller
     public function index()
     {
 
-        // Prendo tutte le case
-        $houses = House::with("services", "address", "views", "sponsors")->get();
-
-        // Creo una un array
-        $housesSponsors = [];
+        $houses = House::has('sponsors', '>', 0)->with("views", "services", "address")->orderBy('created_at', "DESC")->where("is_published", true)
+            ->whereHas('sponsors', function ($query) {
+                $query->where('sponsor_end', '>', now());
+            })
+            ->with(['sponsors' => function ($query) {
+                $query->where('sponsor_end', '>', now());
+            }])
+            ->paginate(6);
 
         // Giro su tutte le case
         foreach ($houses as $house) {
             if ($house->photo) {
                 $house["photo"] = url("storage/" . $house->photo);
             }
-
-            // Controllo se la casa ha una sponsorizzazione
-            if (count($house->sponsors)) {
-
-                //Giro sulle sponsorizzazioni
-                foreach ($house->sponsors as $sponsor) {
-
-                    // Controllo la DATA e ORA attuale
-                    $currentDate = new DateTime();
-
-                    // Formatto la data 
-                    $formateDate = $currentDate->format("Y-m-d H:i:s");
-
-                    // Controllo se la data di fine sponsorizzazione e maggiore della data corrente
-                    if ($sponsor->pivot->sponsor_end > $formateDate) {
-
-                        // Push dentro l'array 
-                        $housesSponsors[] = $house;
-                    }
-                }
-            }
         }
-        return response()->json($housesSponsors);
+        return response()->json($houses);
     }
 
     /**
