@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\House;
+use App\Models\Service;
 use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -124,19 +125,50 @@ class HouseController extends Controller
             $lat = $request->lat;
             $lng = $request->long;
             // Creo la query
-            $housesSelect = House::selectRaw("
+            $housesResult = House::selectRaw("
             *,
             houses.id,
             (6371 * ACOS(COS(RADIANS(?)) * COS(RADIANS(addresses.latitude)) * COS(RADIANS(addresses.longitude) - RADIANS(?)) + SIN(RADIANS(?)) * SIN(RADIANS(addresses.latitude))))
             AS distance", [$lat, $lng, $lat])
                 ->join('addresses', 'houses.address_id', '=', 'addresses.id')
+                ->with("services")
                 ->where("houses.is_published", "1")
-                ->orderBy('distance', "ASC")
-                ->get();
+                ->orderBy('distance', "ASC");
+
+
+            if (!empty($request->total_rooms)) {
+                $housesResult->where('houses.total_rooms', '>=', $request->total_rooms);
+            }
+
+            if (!empty($request->total_beds)) {
+                $housesResult->where('houses.total_beds', '>=', $request->total_beds);
+            }
+
+
+            // $userFilterServices = explode(',', $request->service);
+
+            // Trasformo la stringa in array
+            $userFilterServices = json_decode($request->service);
+            // Prendo le case
+            $housesSelect = $housesResult->get();
+            // Creo un Array
+            $houseFilterServices = [];
 
             foreach ($housesSelect as $houseSelect) {
+                // Prendo tutti gli id dei servizzi della casa
+                $idsArray = $houseSelect->services->pluck("id")->toArray();
+                // Creo un array con all'interno gli id dei servizzi che non sono presenti nella casa
+                $missingServices = array_diff($userFilterServices, $idsArray);
+                // Controllo che MissingServices sia vuoto
+                if (empty($missingServices)) {
+                    // Pusho dentro l'array
+                    $houseFilterServices[] = $houseSelect;
+                }
+            }
+
+            foreach ($houseFilterServices as $houseSelect) {
                 foreach ($responseData["results"] as $result) {
-                    // Vedo se id dfelle case esistono nella risposta dell'APi
+                    // Vedo se id delle case esistono nella risposta dell'APi
                     if ($houseSelect->id == $result["address"]["idHouse"]) {
                         // Pusho dentro array
                         $housesList[] = $houseSelect;
