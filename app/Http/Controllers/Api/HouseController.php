@@ -131,8 +131,13 @@ class HouseController extends Controller
             AS distance", [$lat, $lng, $lat])
                 ->join('addresses', 'houses.address_id', '=', 'addresses.id')
                 ->where("houses.is_published", "1")
-                ->orderBy('distance', "ASC")
-                ->get();
+                ->orderBy('distance', "ASC");
+
+            if (!empty($request->total_rooms)) {
+                $housesSelect->where('houses.total_rooms', '>=', $request->total_rooms);
+            }
+
+            $housesSelect->get();
 
             foreach ($housesSelect as $houseSelect) {
                 foreach ($responseData["results"] as $result) {
