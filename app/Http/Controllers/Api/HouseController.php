@@ -114,12 +114,28 @@ class HouseController extends Controller
             // La chiamata API è andata a buon fine.
             $responseData = $response->json();
             $housesList = [];
-            foreach ($responseData["results"] as $result) {
-                $house = House::with("address", "sponsors")->where("is_published", "1")->where("id", $result["address"]["idHouse"])->first();
-                $housesList[] = $house;
+            $lat = 41.989440;
+            $lng = 12.09588;
+
+            $housesSelect = House::selectRaw("
+            *,
+            houses.id,
+            (6371 * ACOS(COS(RADIANS(?)) * COS(RADIANS(addresses.latitude)) * COS(RADIANS(addresses.longitude) - RADIANS(?)) + SIN(RADIANS(?)) * SIN(RADIANS(addresses.latitude))))
+            AS distance", [$lat, $lng, $lat])
+                ->join('addresses', 'houses.address_id', '=', 'addresses.id')
+                ->where("houses.is_published", "1")
+                ->orderBy('distance', "ASC")
+                ->get();
+
+            foreach ($housesSelect as $houseSelect) {
+                foreach ($responseData["results"] as $result) {
+                    if ($houseSelect->id == $result["address"]["idHouse"]) {
+                        $housesList[] = $houseSelect;
+                    }
+                }
             }
-            return response()->json($housesList);
             // Puoi elaborare la risposta qui.
+            return response()->json($housesList);
         } else {
             return response()->json("La chiamata API non è andata a buon fine.", 500);
         }
