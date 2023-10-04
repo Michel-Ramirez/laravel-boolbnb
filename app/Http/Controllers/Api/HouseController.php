@@ -114,8 +114,8 @@ class HouseController extends Controller
             // La chiamata API è andata a buon fine.
             $responseData = $response->json();
             $housesList = [];
-            $lat = 41.989440;
-            $lng = 12.09588;
+            $lat = $request->lat;
+            $lng = $request->long;
 
             $housesSelect = House::selectRaw("
             *,
