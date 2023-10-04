@@ -72,10 +72,14 @@ class HouseController extends Controller
      */
     public function search(Request $request)
     {
+        // Chiamo tutte le case che sono visibili
         $houses = House::with("address")->where("is_published", "1")->get();
+        // Prendo il raggio
         $num = (int)$request->distance;
+        // Creo un array
         $housesList = [];
         foreach ($houses as $house) {
+            // Creo una casa da inserire nel body
             $houseList =
                 [
                     "address" => [
@@ -87,8 +91,10 @@ class HouseController extends Controller
                         "lon" => $house->address->longitude,
                     ]
                 ];
+            // Pusho dentro l'array
             $housesList[] = $houseList;
         };
+        //   Creo il body della chiamata
         $data =
             [
                 "geometryList" => [
@@ -100,23 +106,24 @@ class HouseController extends Controller
                 ],
                 "poiList" => $housesList,
             ];
-
+        // Tolgo la verifica
         $client = Http::withOptions([
             'verify' => false,
         ]);
-
+        // Chiamo l'API
         $response = $client->post(
             "https://api.tomtom.com/search/2/geometryFilter.json?key=soH7vSRFYTpCT37GOm8wEimPoDyc3GMe",
             $data
         );
-
+        // Se la chiamata va a buon fine
         if ($response->successful()) {
-            // La chiamata API è andata a buon fine.
+            // Prendo la risposta dell API
             $responseData = $response->json();
             $housesList = [];
+            // Preno lar e long dalla richiesta
             $lat = $request->lat;
             $lng = $request->long;
-
+            // Creo la query
             $housesSelect = House::selectRaw("
             *,
             houses.id,
@@ -129,14 +136,18 @@ class HouseController extends Controller
 
             foreach ($housesSelect as $houseSelect) {
                 foreach ($responseData["results"] as $result) {
+                    // Vedo se id dfelle case esistono nella risposta dell'APi
                     if ($houseSelect->id == $result["address"]["idHouse"]) {
+                        // Pusho dentro array
                         $housesList[] = $houseSelect;
                     }
                 }
             }
-            // Puoi elaborare la risposta qui.
+            // Ritorno l'array di case
             return response()->json($housesList);
+            // Se la chiamata non va a buon fine
         } else {
+            // Ritorno errore 500
             return response()->json("La chiamata API non è andata a buon fine.", 500);
         }
     }
