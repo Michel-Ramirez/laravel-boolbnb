@@ -135,11 +135,11 @@ class HouseController extends Controller
                 ->where("houses.is_published", "1")
                 ->orderBy('distance', "ASC");
 
-
+            // Guardo se c'è un filtro per le stanze
             if (!empty($request->total_rooms)) {
                 $housesResult->where('houses.total_rooms', '>=', $request->total_rooms);
             }
-
+            // Guardo se c'è un filtro per i posti letto
             if (!empty($request->total_beds)) {
                 $housesResult->where('houses.total_beds', '>=', $request->total_beds);
             }
