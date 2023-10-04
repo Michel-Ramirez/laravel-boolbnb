@@ -176,6 +176,12 @@ class HouseController extends Controller
                 }
             }
             // Ritorno l'array di case
+            // Giro su tutte le case
+            foreach ($housesList as $house) {
+                if ($house->photo) {
+                    $house["photo"] = url("storage/" . $house->photo);
+                }
+            }
             return response()->json($housesList);
             // Se la chiamata non va a buon fine
         } else {
