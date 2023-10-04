@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\HomePageController;
 use App\Http\Controllers\Api\HouseController;
+use App\Http\Controllers\Api\ServiceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +26,6 @@ Route::get("/houses/search", [HouseController::class, "search"]);
 
 // API HOUSES
 Route::apiResource("/houses", HouseController::class);
+
+// API SERVICE
+Route::apiResource("/services", ServiceController::class);
