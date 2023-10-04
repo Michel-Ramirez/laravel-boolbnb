@@ -21,7 +21,7 @@
                     <tr>
                         <th scope="row">{{ $house->name }}</th>
                         <td>{{ $house->type }}</td>
-                        <td>{{ $house->night_price }}</td>
+                        <td>{{ $house->night_price }}€</td>
                         <td>
                             @if ($house->mq)
                                 {{ $house->mq }} mq
@@ -38,7 +38,7 @@
                                         id="is_published-{{ $house->id }}" onclick="form.submit()" name="is_published"
                                         @if ($house->is_published == true) checked @endif>
                                     <label class="form-check-label" for="is_published-{{ $house->id }}">
-                                        {{ $house->is_published ? 'Pubblicato' : 'Bozza' }}
+                                        {{ $house->is_published ? 'Visibile' : 'Non Visibile' }}
                                     </label>
                                 </div>
                             </form>
