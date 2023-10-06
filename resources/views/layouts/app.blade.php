@@ -24,6 +24,10 @@
         }
     </style>
 
+
+    {{-- Style --}}
+    @yield('styles')
+
     <!-- Usando Vite -->
     @vite(['resources/js/app.js'])
 </head>
