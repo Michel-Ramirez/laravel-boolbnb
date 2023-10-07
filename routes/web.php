@@ -31,6 +31,10 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix("/user")->middleware(["auth"])->name("user.")->group(function () {
     Route::get('/houses/trash', [HouseController::class, 'trash'])->name('houses.trash');
+    Route::get('/houses/{house}/sponsors}', [HouseController::class, 'sponsors'])->name('houses.sponsors');
+    Route::get('/houses/{house}/sponsors/{sponsor}', [HouseController::class, 'sponsor'])->name('houses.sponsor');
+    Route::post('/houses/{house}/sponsors/{sponsor}/payment', [HouseController::class, 'payment'])->name('houses.payment');
+
     Route::patch('/houses/{house}/restore', [HouseController::class, 'restore'])->name('houses.restore');
     Route::patch('/houses/{house}/publish', [HouseController::class, 'publish'])->name('houses.publish');
     Route::delete('/houses/{house}/drop', [HouseController::class, 'drop'])->name('houses.drop');

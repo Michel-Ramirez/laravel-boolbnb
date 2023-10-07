@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Models\House;
 use App\Models\Service;
+use App\Models\Sponsor;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -12,6 +13,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Braintree\Gateway;
+use DateInterval;
+use DateTime;
 
 class HouseController extends Controller
 {
@@ -137,7 +141,7 @@ class HouseController extends Controller
             return view('admin.houses.notAuth');
         };
 
-        $lastSponsorEnd = $house->sponsors()->latest('sponsor_end')->first();
+        $lastSponsorEnd = $house->sponsors()->latest('sponsor_end')->orderBy("house_id", "DESC")->first();
         $sponsorEndDate = null;
         if ($lastSponsorEnd) {
             $sponsorEnd = $lastSponsorEnd->pivot->sponsor_end;
@@ -270,12 +274,16 @@ class HouseController extends Controller
         return to_route("user.houses.index")->with('type', 'delete')->with('message', 'Casa cancellata con successo')->with('alert', 'success');
     }
 
+    // Trash
+
     public function trash(House $house)
     {
         $houses = House::onlyTrashed()->get();
 
         return view('admin.houses.trash', compact('houses'));
     }
+
+    // Restore
 
     public function restore(string $id)
     {
@@ -286,6 +294,8 @@ class HouseController extends Controller
         return to_route('user.houses.trash')->with('type', 'restore')->with('message', 'Casa recuperata con successo')->with('alert', 'success');
     }
 
+    // Drop 
+
     public function drop(string $id)
     {
         $house = House::onlyTrashed()->findOrFail($id);
@@ -293,6 +303,8 @@ class HouseController extends Controller
         $house->forceDelete();
         return to_route("user.houses.trash");
     }
+
+    // Publish
 
     public function publish(Request $request, House $house)
     {
@@ -306,6 +318,98 @@ class HouseController extends Controller
             $house->save();
             $message = "La casa è stata inserita nelle bozze ";
         }
-        return to_route("user.houses.index")->with('type', 'edit')->with('message', $message)->with('alert', 'success');;
+        return to_route("user.houses.index")->with('type', 'edit')->with('message', $message)->with('alert', 'success');
+    }
+
+
+    // Sponsors
+
+    public function sponsors(House $house)
+    {
+        // Control if the log user is same of the house user
+        $user = Auth::id();
+
+        // Se non è lo stesso lo mando in notAuth
+        if ($house->user_id != $user) {
+            return view('admin.houses.notAuth');
+        };
+
+        $sponsors = Sponsor::all();
+
+        return view('admin.houses.sponsors', compact('house', "sponsors"));
+    }
+
+
+
+    // Sponsor
+
+    public function sponsor(House $house, Sponsor $sponsor)
+    {
+        // Control if the log user is same of the house user
+        $user = Auth::id();
+
+        // Se non è lo stesso lo mando in notAuth
+        if ($house->user_id != $user) {
+            return view('admin.houses.notAuth');
+        };
+
+        return view('admin.houses.payment', compact('house', "sponsor"));
+    }
+
+
+    public function payment(Request $request, House $house, Sponsor $sponsor)
+    {
+        // Control if the log user is same of the house user
+        $user = Auth::id();
+
+        // Se non è lo stesso lo mando in notAuth
+        if ($house->user_id != $user) {
+            return view('admin.houses.notAuth');
+        };
+
+
+        // $payload = $request->input('payload', false);
+
+        // Creo il Gateway
+        $gateway = new Gateway([
+            'environment' => 'sandbox',
+            'merchantId' => "hdxcm33stggcsyyg",
+            'publicKey' => "ps5csv88r6xh5rpq",
+            'privateKey' => "3b5ccfc79ac341ea2063511741771bcc",
+        ]);
+
+        // Mandi i dati al Gateway
+        $result = $gateway->transaction()->sale([
+            'amount' => $sponsor->price,
+            'paymentMethodNonce' => $request->payment_method_nonce,
+        ]);
+
+        // Se il la chiamata è andata a buon fine
+
+        if ($result->success) {
+            // prendo la data corrente 
+            $start_sponsor = new DateTime();
+            $end = new DateTime();
+            // Aggiundo la durata della sponsorizzazione
+            $end_sponsor = $end->add(new DateInterval("PT" . $sponsor->duration . "H"));
+
+            // Creo una nuova sponsorizzazione
+
+            $new_sponsorization = [
+                [
+                    "sponsor_id" => $sponsor->id,
+                    "sponsor_start" => $start_sponsor,
+                    "sponsor_end" => $end_sponsor
+                ]
+            ];
+
+            // Faccio l'attach
+            $house->sponsors()->attach($new_sponsorization);
+            // Lo rimando alla show
+            return to_route("user.houses.show", compact('house'))->with('type', 'payment')->with('message', "pagamento effettuato")->with('alert', 'success');
+        } else {
+            // return "La transazione è stata rifiutata. Motivo: " . $result->message;
+            return to_route('user.houses.show', compact('house'))->with('type', 'payment')->with('message', "La transazione è stata rifiutata. Motivo:"  . $result->message)->with('alert', 'danger');
+        }
     }
 }
