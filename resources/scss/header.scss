@@ -1,0 +1,120 @@
+.my-navbar{
+    height: 70px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 50px 0;
+    background-color: white;
+    box-shadow: 0px 10px 10px 2px rgba(0, 0, 0, 0.5);
+
+    .img-container {
+        height: 70px;
+    }
+
+    div {
+        a {
+            display: block;
+            height: 100%;
+
+
+            img {
+                height: 100%;
+            }
+        }
+
+        i {
+            
+            color: #191919;
+            margin: 3px auto;
+            font-size: 30px;
+            background-image: linear-gradient(to right, #97E15F, #22dd85);
+            border-radius: 50%;
+        }
+
+        .user {
+            height: 100%;
+            border-color: black;
+        }
+    }
+
+    .user-icon {
+        &:hover {
+            i {
+                color: #22dd85;
+                background-image: linear-gradient(to right, #4C4C4C, #191919);
+                cursor: pointer;
+            }
+        }
+        .dropdown-toggle {
+            border-width: 0px;
+            padding: 0;
+        }
+    }
+
+    .user-button{
+        padding: 4px 15px;
+        border-radius: 30px;
+        border: 0;
+        background-image: linear-gradient(to right, #97E15F, #22dd85);
+        text-decoration: none;
+        &.show{
+            color: white;
+            background-image: linear-gradient(to right, #4C4C4C, #191919);
+        }
+        .dropdown-toggle {
+            border-width: 0px;
+            padding: 0;
+        }
+        &:hover{
+            color: white;
+            background-image: linear-gradient(to right, #4C4C4C, #191919);
+            span{
+                color: white;
+                
+            }
+            .dropdown-toggle::after {
+                color: #ffffff;
+            }
+        }
+    }
+    
+    .log-button {
+        display: none;
+    }
+
+    .btn-custom {
+
+        padding: 4px 15px;
+        border-radius: 30px;
+        color: #ffffff;
+        border: 0;
+        background-image: linear-gradient(to right, #97E15F, #22dd85);
+        text-decoration: none;
+
+        &:hover {
+            background-image: linear-gradient(to right, #4C4C4C, #191919);
+            color: white;
+        }
+    }
+    .no-caret::after {
+        display: none;
+    }
+    .dropdown-toggle:focus{
+        border:0;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .my-navbar .user-icon {
+        display: none;
+    }
+    
+    .my-navbar .action-button-group .log-button {
+        display: flex;
+        gap: 10px;
+    }
+}
+
+
