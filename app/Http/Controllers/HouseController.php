@@ -141,7 +141,7 @@ class HouseController extends Controller
             return view('admin.houses.notAuth');
         };
 
-        $lastSponsorEnd = $house->sponsors()->latest('sponsor_end')->first();
+        $lastSponsorEnd = $house->sponsors()->latest('sponsor_end')->orderBy("house_id", "DESC")->first();
         $sponsorEndDate = null;
         if ($lastSponsorEnd) {
             $sponsorEnd = $lastSponsorEnd->pivot->sponsor_end;
@@ -320,6 +320,26 @@ class HouseController extends Controller
         }
         return to_route("user.houses.index")->with('type', 'edit')->with('message', $message)->with('alert', 'success');
     }
+
+
+    // Sponsors
+
+    public function sponsors(House $house)
+    {
+        // Control if the log user is same of the house user
+        $user = Auth::id();
+
+        // Se non è lo stesso lo mando in notAuth
+        if ($house->user_id != $user) {
+            return view('admin.houses.notAuth');
+        };
+
+        $sponsors = Sponsor::all();
+
+        return view('admin.houses.sponsors', compact('house', "sponsors"));
+    }
+
+
 
     // Sponsor
 

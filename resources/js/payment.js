@@ -70,11 +70,6 @@ braintree.client.create(
                                 console.error(tokenizeErr);
                                 return;
                             }
-
-                            // If this was a real integration, this is where you would
-                            // send the nonce to your server.
-
-                            console.log(nonceInput);
                             nonceInput.value = payload.nonce;
                             form.submit();
                         });

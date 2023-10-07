@@ -45,6 +45,11 @@
                             @endforeach
                         </div>
                     </li>
+                    {{-- @if ($sponsorEndDate)
+                        @foreach ($house->sponsors as $sponsor)
+                            {{ $sponsorEndDate }}
+                        @endforeach
+                    @endif --}}
                     @if ($sponsorEndDate)
                         <li class="list-group-item">La Sponsorizzazione scade: {{ $sponsorEndDate }}
                         @else
@@ -59,7 +64,13 @@
                     </div>
                     </li>
                     <li class=" list-group-item">
-                        <a class="btn btn-secondary" href="{{ route('user.houses.index') }}">Torna Indietro</a>
+                        <div class="d-flex justify-content-between">
+                            <a class="btn btn-secondary" href="{{ route('user.houses.index') }}">Torna Indietro</a>
+                            @if ($house->is_published)
+                                <a href="{{ route('user.houses.sponsors', $house) }}"
+                                    class="btn btn-primary">Sponsorizza</a>
+                            @endif
+                        </div>
                     </li>
                 </ul>
             </div>
