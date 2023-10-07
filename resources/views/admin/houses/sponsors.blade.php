@@ -10,8 +10,9 @@
             <div class="row">
                 @foreach ($sponsors as $sponsor)
                     <div class="col">
-                        <div class="card text-center mb-3" style="width: 18rem;">
+                        <div class="card text-center mb-3 h-100" style="width: 18rem;">
                             <div class="card-body">
+                                <img src="{{ Vite::asset('public/img/' . $sponsor->url) }}" alt="ciao" class="img-fluid">
                                 <h5 class="card-title">{{ $sponsor->name }}</h5>
                                 <p class="card-text">Prezzo: €{{ $sponsor->price }}
                                 </p>
