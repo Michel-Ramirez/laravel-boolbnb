@@ -50,6 +50,8 @@ class HouseController extends Controller
     public function show(string $id)
     {
         //
+        $house = House::with("address", "user", "services")->find($id);
+        return response()->json($house);
     }
 
     /**
