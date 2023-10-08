@@ -141,14 +141,17 @@ class HouseController extends Controller
             return view('admin.houses.notAuth');
         };
 
+        // Take last sponsor of the house
         $lastSponsorEnd = $house->sponsors()->latest('sponsor_end')->orderBy("house_id", "DESC")->first();
+
         $sponsorEndDate = null;
-        if ($lastSponsorEnd) {
+        // Create current date
+        $currentDate = Carbon::now();
+        // Check if the last sponsor date is > of the current date
+        if ($lastSponsorEnd && $lastSponsorEnd->pivot->sponsor_end > $currentDate) {
             $sponsorEnd = $lastSponsorEnd->pivot->sponsor_end;
             $sponsorEndDate = Carbon::parse($sponsorEnd)->format('d/m/Y');
         }
-        // $sponsorEnd = $lastSponsorEnd->pivot->sponsor_end;
-        // $sponsorEndDate = Carbon::parse($sponsorEnd)->format('d/m/Y');
         return view('admin.houses.show', compact('house', 'sponsorEndDate'));
     }
 
@@ -352,6 +355,9 @@ class HouseController extends Controller
         if ($house->user_id != $user) {
             return view('admin.houses.notAuth');
         };
+
+        // I check if the house belongs to the user and if he does not have a sponsorship
+
 
         return view('admin.houses.payment', compact('house', "sponsor"));
     }
