@@ -357,7 +357,14 @@ class HouseController extends Controller
         };
 
         // I check if the house belongs to the user and if he does not have a sponsorship
+        $lastSponsorEnd = $house->sponsors()->latest('sponsor_end')->orderBy("house_id", "DESC")->first();
 
+        // Create current date
+        $currentDate = Carbon::now();
+        // Check if the last sponsor date is > of the current date
+        if ($lastSponsorEnd && $lastSponsorEnd->pivot->sponsor_end > $currentDate) {
+            return view('admin.houses.notAuth');
+        }
 
         return view('admin.houses.payment', compact('house', "sponsor"));
     }
