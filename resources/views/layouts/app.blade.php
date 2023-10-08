@@ -57,7 +57,7 @@
                         </div>
                     @endguest
                     @auth
-                        <div class="dropdown ">
+                        <div class="dropdown d-none d-md-block  ">
                             <button class="user btn dropdown-toggle user-button" type="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 <span>{{ Auth::user()->name ? Auth::user()->name : Auth::user()->email }}</span>
