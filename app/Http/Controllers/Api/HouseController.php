@@ -138,7 +138,7 @@ class HouseController extends Controller
             (6371 * ACOS(COS(RADIANS(?)) * COS(RADIANS(addresses.latitude)) * COS(RADIANS(addresses.longitude) - RADIANS(?)) + SIN(RADIANS(?)) * SIN(RADIANS(addresses.latitude))))
             AS distance", [$lat, $lng, $lat])
                 ->join('addresses', 'houses.address_id', '=', 'addresses.id')
-                ->with("services")
+                ->with("services", "sponsors")
                 ->where("houses.is_published", "1")
                 ->orderBy('distance', "ASC");
 
