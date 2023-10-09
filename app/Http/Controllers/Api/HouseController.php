@@ -51,6 +51,11 @@ class HouseController extends Controller
     {
         //
         $house = House::with("address", "user", "services")->find($id);
+
+        // Giro su tutte le case
+        if ($house->photo) {
+            $house["photo"] = url("storage/" . $house->photo);
+        }
         return response()->json($house);
     }
 
