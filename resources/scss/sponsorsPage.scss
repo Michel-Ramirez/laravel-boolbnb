@@ -4,7 +4,24 @@ header{
 }
 
 
-main{
-    height: calc(100vh - 80px);
 
+.container{
+    margin-top: 100px;
+}
+
+
+
+.btn-custom {
+
+    padding: 4px 15px;
+    border-radius: 30px;
+    color: #ffffff;
+    border: 0;
+    background-image: linear-gradient(to right, #97E15F, #22dd85);
+    text-decoration: none;
+
+    &:hover {
+        color: white;
+        transform: scale(1.25);
+    }
 }
