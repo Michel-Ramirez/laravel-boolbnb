@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\HomePageController;
 use App\Http\Controllers\Api\HouseController;
+use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\ServiceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +30,6 @@ Route::apiResource("/houses", HouseController::class);
 
 // API SERVICE
 Route::apiResource("/services", ServiceController::class);
+
+// API MESSAGE
+Route::post("/messages", [MessageController::class, 'store']);
