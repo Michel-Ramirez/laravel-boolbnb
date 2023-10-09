@@ -6,23 +6,66 @@
 @section('content')
     <div class="container-fluid  h-100">
         <div class="row h-100 ">
-            <div class="col-6 col-left h-100">
+            <div class="col-12 col-md-6 col-left">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-12 d-flex justify-content-center pt-5">
-                            <a href="{{ route('user.houses.index') }}" class="btn btn-secondary">Annulla
-                                Pagamento</a>
+                    <div class="row ">
+                        <div class="col-12 pt-5  ">
+                            <a href="{{ route('user.houses.index') }}" class="fs-5 text-decoration-none back-btn">
+                                <i class="fa-solid fa-arrow-left"></i> Annulla Pagamento</a>
+                        </div>
+                        <div class="col-12  ">
+                            <div class="row justify-content-center">
+                                <div class="col-12">
+                                    <div class="row  justify-content-center">
+                                        <div class="col-12 col-xl-6">
+                                            <div class="card mb-3 ">
+                                                <div class="card-body">
+                                                    <img src="{{ Vite::asset('public/img/' . $sponsor->url) }}"
+                                                        alt="ciao" class="img-fluid">
+                                                    <h3 class="card-title text-center">{{ $sponsor->name }}</h3>
+                                                    <div>
+                                                        <h5 class="text-success text-center">Benefici</h5>
+                                                        <ul>
+                                                            <li class="mt-2">La tua casa verrà inseriti nella
+                                                                homepage</li>
+                                                            <li class="mt-2">La tua casa apparirà in cima alle
+                                                                case non sponsorizzate nella pagina di ricerca
+                                                            </li>
+                                                            @if ($sponsor->price == '2.99')
+                                                                <li class="mt-2"> Durata Sponsorizzazione :
+                                                                    24h</li>
+                                                            @endif
+                                                            @if ($sponsor->price == '5.99')
+                                                                <li class="mt-2"> Durata Sponsorizzazione :
+                                                                    72h</li>
+                                                            @endif
+                                                            @if ($sponsor->price == '9.99')
+                                                                <li class="mt-2"> Durata Sponsorizzazione :
+                                                                    144h</li>
+                                                            @endif
+                                                        </ul>
+                                                    </div>
+                                                    <p class="card-text text-center fs-5"><strong>Prezzo:
+                                                            €{{ $sponsor->price }}</strong>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-8">
+            <div class="col-12 col-md-6">
+                <div class="container h-100">
+                    <div class="row align-items-center h-100">
+                        <div class="col-12 col-lg-8">
+                            <h1>Inserisci i dati di pagamento</h1>
                             <form id="payment-form"
                                 action="{{ route('user.houses.payment', ['house' => $house, 'sponsor' => $sponsor]) }}"
-                                method="post" class="p-5">
+                                method="post" class="pt-5">
                                 @csrf
                                 <div class="mb-3">
                                     <label for="card-name" class="form-label">Nome e Cognome</label>
@@ -42,7 +85,7 @@
                                 </div>
                                 <input type="hidden" id="nonce" name="payment_method_nonce" />
                                 <div class="d-flex justify-content-end gap-2">
-                                    <input type="submit" value="Paga" class="btn btn-primary" disabled />
+                                    <input type="submit" value="Paga" class="btn-custom" disabled />
                                 </div>
                             </form>
                         </div>

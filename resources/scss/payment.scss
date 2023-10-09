@@ -1,16 +1,49 @@
 
 
-.navbar{
-    height: 70px;
-}
+
 
 main{
-    height: calc(100vh - 70px);
+    height: calc(100vh - 100px);
 }
 .form-control{
     height: 50px;
 }
 
 .col-left{
-    background-color:#22bb85;
+    background-image: linear-gradient(to right, #97E15F, #22dd85);
+}
+.col-12{
+    .card{
+        margin-top: 50px;
+        background-color: transparent;
+        box-shadow: 4px 0px 30px 4px seagreen;
+        
+        .card-body{
+            padding-top: 0;
+        }
+    }
+}
+
+
+.back-btn{
+    color: black;
+    &:hover{
+        color: rgb(108,117,125);
+    }
+}
+
+.btn-custom {
+
+    padding: 4px 15px;
+    border-radius: 30px;
+    color: #ffffff;
+    border: 0;
+   
+    background-image: linear-gradient(to right, #4C4C4C, #191919);
+    text-decoration: none;
+
+    &:hover {
+        background-image: linear-gradient(to right, #97E15F, #22dd85);
+        color: black;
+    }
 }
