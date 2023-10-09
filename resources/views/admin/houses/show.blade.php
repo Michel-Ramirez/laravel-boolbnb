@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('styles')
+    @vite(['resources/scss/show.scss'])
+@endsection
 @section('content')
     <div class="card-header text-center mb-3 bg-white">
         <h1>{{ $house->name }}</h1>
@@ -71,6 +74,31 @@
                         </div>
                     </li>
                 </ul>
+            </div>
+        </div>
+        <button class="btn btn-primary btn-message" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            <i class="fa-solid fa-comment fa-3x"></i>
+        </button>
+        <div class="offcanvas offcanvas-end w-50" tabindex="-1" id="offcanvasExample"
+            aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Utenti interessati alla casa: {{ $house->name }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                @foreach ($house->messages as $message)
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            {{ $message->email }}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $message->name }}</h5>
+                            <p class="card-text">{{ $message->message }}</p>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     @endsection
