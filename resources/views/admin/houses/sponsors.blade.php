@@ -7,10 +7,10 @@
 @section('content')
   <div class="container h-100">
     <div class="d-flex justify-content-center align-items-center h-100">
-      <div class="row">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 d-flex justify-content-center">
         @foreach ($sponsors as $sponsor)
-          <div class="col">
-            <div class="card mb-3 h-100" style="width: 18rem;">
+          <div class="col col-lg-3 mb-3">
+            <div class="card mb-3 h-100">
               <div class="card-body">
                 <img src="{{ Vite::asset('public/img/' . $sponsor->url) }}" alt="ciao" class="img-fluid">
                 <h3 class="card-title text-center">{{ $sponsor->name }}</h3>
