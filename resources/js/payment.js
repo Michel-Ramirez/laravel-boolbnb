@@ -1,7 +1,8 @@
 const form = document.getElementById("payment-form");
 const submit = document.querySelector('input[type="submit"]');
 const nonceInput = document.getElementById("nonce");
-
+const myAlert = document.getElementById("alert");
+const messageAlert = document.getElementById("message");
 braintree.client.create(
     {
         authorization: "sandbox_pg6z6szp_hdxcm33stggcsyyg",
@@ -29,9 +30,13 @@ braintree.client.create(
                     "input.valid": {
                         color: "green",
                     },
+                    ".invalid": {
+                        color: "red",
+                    },
                 },
                 fields: {
                     number: {
+                        required: true,
                         container: "#card-number",
                         placeholder: "4111 1111 1111 1111",
                     },
@@ -61,13 +66,14 @@ braintree.client.create(
                     "submit",
                     function (event) {
                         event.preventDefault();
-
                         hostedFieldsInstance.tokenize(function (
                             tokenizeErr,
                             payload
                         ) {
                             if (tokenizeErr) {
                                 console.error(tokenizeErr);
+                                myAlert.classList.add("show");
+                                messageAlert.innerText = tokenizeErr["message"];
                                 return;
                             }
                             nonceInput.value = payload.nonce;
