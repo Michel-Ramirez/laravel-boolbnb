@@ -88,7 +88,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                @foreach ($house->messages as $message)
+                @forelse($house->messages as $message)
                     <div class="card mt-4">
                         <div class="card-header">
                             {{ $message->email }}
@@ -98,7 +98,9 @@
                             <p class="card-text">{{ $message->message }}</p>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <h4>Nessun messaggio trovato</h4>
+                @endforelse
             </div>
         </div>
     @endsection

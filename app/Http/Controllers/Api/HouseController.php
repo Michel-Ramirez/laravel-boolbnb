@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\House;
 use App\Models\Service;
+use App\Models\View;
+use Carbon\Carbon;
 use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -195,5 +197,34 @@ class HouseController extends Controller
             // Ritorno errore 500
             return response()->json("La chiamata API non è andata a buon fine.", 500);
         }
+    }
+    // Views
+    public function views(Request $request)
+    {
+        //
+
+        $ip = View::where("ip_viewer", "=", $request->ip_viewer)->orderBy("created_at", "DESC")->first();
+        if ($ip) {
+            $currentDate = Carbon::now();
+            $differenceInHours = $currentDate->diffInHours($ip->created_at);
+        }
+
+        if (!$ip || $differenceInHours > 24) {
+            $newViews = new View();
+            $newViews->house_id = $request->house_id;
+            $newViews->ip_viewer = $request->ip_viewer;
+            $newViews->save();
+            return response(null, 204);
+        } else {
+            return response("l'utente ha gia visualizzato", 200);
+        }
+    }
+
+    public function showViews(Request $request)
+    {
+        //
+        $house = House::find($request->house_id);
+        $count = count($house->views);
+        return response()->json($count);
     }
 }
