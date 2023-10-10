@@ -67,9 +67,9 @@
                                 <span>{{ Auth::user()->name ? Auth::user()->name : Auth::user()->email }}</span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a class="dropdown-item" href="{{ url('dashboard') }}">{{ __('Dashboard') }}</a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item">
                                     <a class="dropdown-item"
                                         href="{{ route('user.houses.trash') }}">{{ __('Cestino') }}</a>
@@ -78,7 +78,7 @@
                                     <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Profile') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="dropdown-item" href="'http://localhost:5174/"
                                         onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
@@ -110,9 +110,9 @@
                                 @endif
                                 <!-- bottone per il login e sing in -->
                             @else
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a class="dropdown-item" href="{{ url('dashboard') }}">{{ __('Dashboard') }}</a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item">
                                     <a class="dropdown-item"
                                         href="{{ route('user.houses.trash') }}">{{ __('Cestino') }}</a>
@@ -121,7 +121,7 @@
                                     <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Profile') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="dropdown-item" href="{{ url('http://localhost:5174/') }}"
                                         onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
