@@ -62,6 +62,9 @@
                 <div class="container h-100">
                     <div class="row align-items-center h-100">
                         <div class="col-12 col-lg-8">
+                            <div class="alert alert-danger  fade" id="alert" role="alert">
+                                <strong id="message"></strong>
+                            </div>
                             <h1>Inserisci i dati di pagamento</h1>
                             <form id="payment-form"
                                 action="{{ route('user.houses.payment', ['house' => $house, 'sponsor' => $sponsor]) }}"
