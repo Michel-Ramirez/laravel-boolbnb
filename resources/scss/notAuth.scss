@@ -1,16 +1,17 @@
-body{
-    background-color: gray;
-}
-.my-h1{
-    font-size: 4.5rem;
-    position: relative;
-    z-index: 1;
-}
-a{
-    font-size:50pX;
-    position: relative;
-    z-index: 1;
-}
-.fa-2xl{
-    font-size: 622px;
+.error-404 {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background: rgba(0, 0, 0, 0.7);
+    font-size: 3em;
+
+    .error-content {
+        text-shadow: 0 3px black;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
 }
