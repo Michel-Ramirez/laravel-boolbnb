@@ -25,6 +25,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // API SEARCH
 Route::get("/houses/search", [HouseController::class, "search"]);
 
+// API VIEWS
+Route::post("/houses/views", [HouseController::class, "views"]);
+Route::get("/houses/views", [HouseController::class, "showViews"]);
+
+
+
 // API HOUSES
 Route::apiResource("/houses", HouseController::class);
 

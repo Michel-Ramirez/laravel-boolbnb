@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\House;
 use App\Models\Service;
+use App\Models\View;
 use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -195,5 +196,23 @@ class HouseController extends Controller
             // Ritorno errore 500
             return response()->json("La chiamata API non è andata a buon fine.", 500);
         }
+    }
+    // Views
+    public function views(Request $request)
+    {
+        //
+        $newViews = new View();
+        $newViews->house_id = $request->house_id;
+        $newViews->ip_viewer = $request->ip_viewer;
+        $newViews->save();
+        return response(null, 204);
+    }
+
+    public function showViews(Request $request)
+    {
+        //
+        $house = House::find($request->house_id);
+        $count = count($house->views);
+        return response()->json($count);
     }
 }
