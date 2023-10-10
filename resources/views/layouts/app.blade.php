@@ -34,6 +34,7 @@
     <!-- Usando Vite -->
     @vite(['resources/js/app.js'])
     @vite(['resources/scss/header.scss'])
+    @vite(['resources/scss/footer.scss'])
 </head>
 
 <body>
@@ -147,6 +148,7 @@
             @yield('content')
         </main>
     </div>
+    @include('layouts.footer')
     @yield('scripts')
 </body>
 
