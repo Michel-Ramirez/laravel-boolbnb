@@ -6,7 +6,8 @@
 
 @section('content')
   <div class="container mt-5">
-    <div class="d-flex justify-content-end mb-4"><a href="{{ route('user.houses.create') }}" class="btn btn-primary">Aggiungi
+    <div class="d-flex justify-content-end mb-4"><a href="{{ route('user.houses.create') }}" class="btn btn-primary"><i
+          class="fa-solid fa-house me-2"></i>Aggiungi
         Casa</a></div>
     @foreach ($houses as $house)
       <div class="card mb-3">
