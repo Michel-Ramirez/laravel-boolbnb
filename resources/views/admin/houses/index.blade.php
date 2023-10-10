@@ -17,7 +17,7 @@
               class="rounded-start  img-fluid">
           </div>
           <div class="col-md-8">
-            <div class="card-body">
+            <div class="card-body pb-0">
               <div class="d-flex justify-content-between">
                 <h5 class="card-title">{{ $house->name }}</h5>
                 <div>
@@ -40,7 +40,7 @@
                     bagni: {{ $house->total_bath }} | stanze: {{ $house->total_rooms }} |
                     letti: {{ $house->total_beds }}</small></p>
               </div>
-              <div class="d-flex align-items-center justify-content-between mt-3">
+              <div class="d-flex align-items-center justify-content-between mt-2">
                 <form action="{{ route('user.houses.publish', $house) }}" id="is-published-form" method="POST">
                   @csrf
                   @method('PATCH')
