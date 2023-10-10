@@ -12,10 +12,12 @@
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -28,12 +30,12 @@
     @vite(['resources/scss/notAuth.scss'])
 </head>
 
-<div class="position-absolute top-50 start-50 translate-middle">
-    <div class="text-center">
-        <h1 class="my-h1">Non sei Autorizzato</h1>
-        <i class="fa-solid fa-ban fa-beat fa-2xl" style="color: #ff0000;"></i>
-        <div class="text-center py-3">
-            <a href="{{ route('user.houses.index') }}" class="btn btn-secondary">Torna alla Tabella</a>
-        </div>
+<div class="error-404">
+    <div class="error-content">
+        <i class="fa-solid fa-house-circle-exclamation fa-shake fa-2x mb-5 " style="color: red"></i>
+        <bold>Non puoi modificare questo annuncio</bold>
+    </div>
+    <div class="text-center py-3">
+        <a href="{{ route('user.houses.index') }}" class="btn btn-secondary">Torna alla Tabella</a>
     </div>
 </div>
