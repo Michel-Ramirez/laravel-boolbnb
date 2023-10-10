@@ -41,7 +41,7 @@
                     bagni: {{ $house->total_bath }} | stanze: {{ $house->total_rooms }} |
                     letti: {{ $house->total_beds }}</small></p>
               </div>
-              <div class="d-flex align-items-center justify-content-between mt-2">
+              <div class="d-flex align-items-center justify-content-between mt-2 mb-1">
                 <form action="{{ route('user.houses.publish', $house) }}" id="is-published-form" method="POST">
                   @csrf
                   @method('PATCH')
