@@ -1,11 +1,13 @@
 @extends('layouts.app')
-
+@section('styles')
+    @vite(['resources/scss/login.scss'])
+@endsection
 @section('content')
     <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Accedi') }}</div>
+                    <div class="card-header acces_color">{{ __('Accedi') }}</div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('login') }}">
@@ -60,12 +62,13 @@
 
                             <div class="mb-4 row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn-custom">
                                         {{ __('Accedi') }}
                                     </button>
 
                                     @if (Route::has('password.request'))
-                                        <a class="btn btn-link" href="{{ route('password.request') }}">
+                                        <a class="link-secondary link-offset-2 link-underline link-underline-opacity-0 link-opacity-50-hover"
+                                            href="{{ route('password.request') }}">
                                             {{ __('Password dimenticata?') }}
                                         </a>
                                     @endif

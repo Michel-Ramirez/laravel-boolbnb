@@ -1,0 +1,15 @@
+.register_color {
+    background-image: linear-gradient(to right, #97e15f, #22dd85);
+}
+.btn-custom {
+    padding: 4px 15px;
+    border-radius: 30px;
+    color: #ffffff;
+    border: 0;
+    background-image: linear-gradient(to right, #97e15f, #22dd85);
+    text-decoration: none;
+
+    &:hover {
+        background-image: linear-gradient(to right, #4c4c4c, #191919);
+    }
+}
