@@ -3,7 +3,130 @@ body{
     position: relative;
     .btn-message{
         position: fixed;
-        bottom: 50px;
-        right: 50px;
+        bottom: 150px;
+        right: 25px;
     }
+}
+
+.house-detail {
+    img {
+        border-radius: 10px;
+    }
+}
+
+.house-composition {
+
+    .card-title {
+        margin-bottom: 0;
+    }
+
+}
+
+.wrapper-composition-cards,
+.wrapper-house-services-card {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+
+.house-composition .card,
+.house-services .card {
+    width: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px
+}
+
+
+.content-container {
+
+    .house-description,
+    .host-section,
+    .house-services,
+    .house-composition {
+        border-bottom: 1px solid lightgray;
+    }
+
+    .host-section {
+        border-top: 1px solid lightgray;
+        margin-top: 30px;
+    }
+
+    .house-description {
+        padding: 30px 0;
+    }
+
+}
+
+.form-reservation {
+    display: none;
+
+    margin-top: 20px;
+
+    .card {
+        max-width: 450px;
+        padding: 30px;
+
+        #detail_reservation {
+            min-height: 200px;
+        }
+
+    }
+
+
+    .btn-custom {
+        padding: 10px 100px;
+        font-size: 1.5rem;
+    }
+}
+
+.price {
+    font-size: 1.3rem;
+}
+
+.reservation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+}
+
+#map {
+    height: 450px;
+    width: 100%;
+}
+
+.offcanvas {
+    height: 100%;
+}
+.btn-custom {
+
+    padding: 4px 15px;
+    border-radius: 30px;
+    color: #ffffff;
+    border: 0;
+    background-image: linear-gradient(to right, #97E15F, #22dd85);
+    text-decoration: none;
+
+    &:hover {
+        background-image: linear-gradient(to right, #4C4C4C, #191919);
+        color: white;
+    }
+}
+.offcanvas{
+    div{
+        border-radius: 25px;
+    }
+    .my-offcanvas-body{
+        padding: 10px;
+        border-radius: 23px;
+        background-image:linear-gradient(to right, #97E15F, #22dd85);
+    }
+}
+.p-50{
+    padding-left: 25%;
 }
