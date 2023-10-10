@@ -204,7 +204,7 @@ class HouseController extends Controller
     {
         //
 
-        $ip = View::where("ip_viewer", "=", $request->ip_viewer)->orderBy("created_at", "DESC")->first();
+        $ip = View::where("ip_viewer", "=", $request->ip_viewer)->where("house_id", "=", $request->house_id)->orderBy("created_at", "DESC")->first();
         if ($ip) {
             $currentDate = Carbon::now();
             $differenceInHours = $currentDate->diffInHours($ip->created_at);
