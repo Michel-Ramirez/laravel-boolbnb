@@ -11,7 +11,7 @@
         @foreach ($sponsors as $sponsor)
           <div class="col col-lg-3 mb-3">
             <div class="card mb-3 h-100">
-              <div class="card-body">
+              <div class="card-body pt-0">
                 <img src="{{ Vite::asset('public/img/' . $sponsor->url) }}" alt="ciao" class="img-fluid">
                 <h3 class="card-title text-center">{{ $sponsor->name }}</h3>
                 <div>
