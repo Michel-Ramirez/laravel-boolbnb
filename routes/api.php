@@ -28,7 +28,7 @@ Route::get("/houses/search", [HouseController::class, "search"]);
 // API VIEWS
 Route::post("/houses/views", [HouseController::class, "views"]);
 Route::get("/houses/views", [HouseController::class, "showViews"]);
-
+Route::get("/houses/views/chart", [HouseController::class, "getViews"]);
 
 
 // API HOUSES

@@ -7,6 +7,7 @@ use App\Models\House;
 use App\Models\Service;
 use App\Models\Sponsor;
 use App\Models\User;
+use App\Models\View;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

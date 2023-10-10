@@ -11,10 +11,10 @@
         <div class=" container">
             <div>
                 <img src="{{ $house->photo ? asset('storage/' . $house->photo) : 'https://saterdesign.com/cdn/shop/products/property-placeholder_a9ec7710-1f1e-4654-9893-28c34e3b6399_600x.jpg?v=1500393334' }}"
-                    class="" alt="...">
+                    class="img-fluid w-100" alt="...">
             </div>
             <div class="row my-4">
-                <div class="col-xl-11 content-container pe-5">
+                <div class="col-xl-12 content-container ">
                     <div>
                         <h5>{{ $house->address->home_address }}</h5>
                     </div>
@@ -25,7 +25,9 @@
                         <p class="text-end"><strong>{{ $house->night_price }}€</strong>/Notte</p>
                     </div>
                     <div class="host-section">
-                        <h6 class="py-4">Nome dell'host: {{ $house->user->name }} {{ $house->user->surname }}</h6>
+                        <h6 class="py-4" id="houseId" data-house-id="{{ $house->id }}">Nome dell'host:
+                            {{ $house->user->name }}
+                            {{ $house->user->surname }}</h6>
                     </div>
                     <div class="house-description">
                         <p>
@@ -77,7 +79,7 @@
                         </div>
                     </div>
                     <div class="house-services py-5">
-                        <h5 class="pb-4">Servizzi dell'alloggio</h5>
+                        <h5 class="pb-4">Servizi dell'alloggio</h5>
                         <div class="row">
                             <div class="col-12 wrapper-house-services-card">
                                 @foreach ($house->services as $service)
@@ -92,6 +94,15 @@
                         </div>
                     </div>
                 </div>
+                <h2 class="text-center mt-5">Statistiche</h2>
+                <select class="form-select w-50 mt-5" id="period-statistic">
+                    <option value="1">Primo Semestre (Gen-Giu)</option>
+                    <option value="2">Seconso Semestre (Lug-Dic)</option>
+                    <option value="3">Annuale</option>
+                </select>
+                <div class="container container-chart my-5">
+                    <canvas id="myChart"></canvas>
+                </div>
                 @if ($sponsorEndDate)
                     <li class="list-group-item">La Sponsorizzazione scade il:
                         <strong>{{ $sponsorEndDate }}</strong>
@@ -100,9 +111,9 @@
                 @endif
                 <div class="text-end">
                     @if ($house->is_published)
-                        <h5 class="badge text-bg-primary p-3 fs-6">L'appartamento è Pubblicato</h5>
+                        <h5 class="badge text-bg-primary p-3 fs-6">L'appartamento è Visibile</h5>
                     @else
-                        <h5 class="badge text-bg-danger p-3 fs-6">L'appartamento non è Pubblicato</h5>
+                        <h5 class="badge text-bg-danger p-3 fs-6">L'appartamento non è Visibile</h5>
                     @endif
                 </div>
                 </li>
@@ -145,4 +156,8 @@
                 @endforelse
             </div>
         </div>
+    @endsection
+    @section('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        @vite(['resources/js/scriptGraph.js'])
     @endsection

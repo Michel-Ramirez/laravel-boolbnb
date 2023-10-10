@@ -124,3 +124,11 @@ body{
 .p-50{
     padding-left: 25%;
 }
+
+
+.container-chart{
+    min-height: 500px;
+    #myChart{
+    height: 100%;
+    }
+}

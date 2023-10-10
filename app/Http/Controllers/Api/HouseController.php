@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\House;
+use App\Models\Message;
 use App\Models\Service;
 use App\Models\View;
 use Carbon\Carbon;
@@ -226,5 +227,43 @@ class HouseController extends Controller
         $house = House::find($request->house_id);
         $count = count($house->views);
         return response()->json($count);
+    }
+
+    public function getViews(Request $request)
+    {
+
+
+        $viewsByMonth = View::where('house_id', $request->house_id)->whereYear('created_at', '=', now()->year); // Filtra per l'anno attuale
+        $messageByMonth = Message::where('house_id', $request->house_id)->whereYear('created_at', '=', now()->year); // Filtra per l'anno attuale
+
+        if ($request->period_date == 1) {
+            $viewsByMonth->whereMonth('created_at', '>=', 1); // Filtra per i mesi da gennaio (1) a giugno (6)
+            $viewsByMonth->whereMonth('created_at', '<=', 6);
+            $viewsByMonth->selectRaw('DATE_FORMAT(created_at, "%Y-%m") as date, COUNT(*) as views')->groupByRaw('DATE_FORMAT(created_at, "%Y-%m")');
+            $messageByMonth->whereMonth('created_at', '>=', 1); // Filtra per i mesi da gennaio (1) a giugno (6)
+            $messageByMonth->whereMonth('created_at', '<=', 6);
+            $messageByMonth->selectRaw('DATE_FORMAT(created_at, "%Y-%m") as date, COUNT(*) as message')->groupByRaw('DATE_FORMAT(created_at, "%Y-%m")');
+        };
+        if ($request->period_date == 2) {
+            $viewsByMonth->whereMonth('created_at', '>=', 7); // Filtra per i mesi da gennaio (1) a giugno (6)
+            $viewsByMonth->whereMonth('created_at', '<=', 12);
+            $viewsByMonth->selectRaw('DATE_FORMAT(created_at, "%Y-%m") as date, COUNT(*) as views')->groupByRaw('DATE_FORMAT(created_at, "%Y-%m")');
+            $messageByMonth->whereMonth('created_at', '>=', 7); // Filtra per i mesi da gennaio (1) a giugno (6)
+            $messageByMonth->whereMonth('created_at', '<=', 12);
+            $messageByMonth->selectRaw('DATE_FORMAT(created_at, "%Y-%m") as date, COUNT(*) as message')->groupByRaw('DATE_FORMAT(created_at, "%Y-%m")');
+        }
+        if ($request->period_date == 3) {
+            $viewsByMonth->selectRaw('DATE_FORMAT(created_at, "%Y") as date, COUNT(*) as views');
+            $viewsByMonth->groupByRaw('DATE_FORMAT(created_at, "%Y")');
+            $messageByMonth->selectRaw('DATE_FORMAT(created_at, "%Y") as date, COUNT(*) as message');
+            $messageByMonth->groupByRaw('DATE_FORMAT(created_at, "%Y")');
+        }
+        $viewsByMonth->orderBy('date', "DESC");
+        $messageByMonth->orderBy('date', "DESC");
+        $views = $viewsByMonth->get();
+        $messages = $messageByMonth->get();
+
+        $responseData = ["views" => $views, "messages" => $messages];
+        return response()->json($responseData);
     }
 }
