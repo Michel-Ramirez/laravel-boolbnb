@@ -32,12 +32,7 @@
                         <span>Bagni: {{ $house->total_bath }}</span>
                         <p class="text-end"><strong>{{ $house->night_price }}€</strong>/Notte</p>
                     </div>
-                    <div class="host-section">
-                        <h6 class="py-4" id="houseId" data-house-id="{{ $house->id }}">Nome dell'host:
-                            {{ $house->user->name }}
-                            {{ $house->user->surname }}</h6>
-                    </div>
-                    <div class="house-description">
+                    <div class="house-description" id="houseId" data-house-id="{{ $house->id }}">
                         <p>
                             {{ $house->description }}
                         </p>
@@ -124,7 +119,7 @@
                                 </figure>
                             </div>
                             <div class="card-body text-center">
-                                <h2 class="my-3 pb-3">Sponsorizza la tua casa</h2>
+                                <h2 class="my-3 pb-3 fw-bold">Sponsorizza la tua casa</h2>
                                 <p>Scegli uno dei nostri piani promozionali per massimizzare la visibilità del tuo annuncio!
                                     Mettendo in evidenza il tuo annuncio, raggiungerai un pubblico più ampio e otterrai
                                     vantaggi
@@ -187,8 +182,7 @@
             data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
             <i class="fa-solid fa-comment fa-3x"></i>
         </button>
-        <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasExample"
-            aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title p-50" id="offcanvasExampleLabel">Utenti interessati alla casa:
                     {{ $house->name }}
