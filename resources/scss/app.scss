@@ -1,15 +1,11 @@
 @use "./utilities.scss";
-@import '~bootstrap/scss/bootstrap';
-body{
+@import "~bootstrap/scss/bootstrap";
+body {
     display: block;
+    font-family: sans-serif;
 }
 
-#app{
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-main{
+main {
+    min-height: calc(100vh - 527px);
     flex-grow: 1;
 }
