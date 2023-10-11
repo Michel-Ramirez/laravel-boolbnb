@@ -283,7 +283,9 @@ class HouseController extends Controller
 
     public function trash(House $house)
     {
-        $houses = House::onlyTrashed()->get();
+
+        $user = Auth::user();
+        $houses = House::onlyTrashed()->where('user_id', '=', $user->id)->get();
 
         return view('admin.houses.trash', compact('houses'));
     }
