@@ -9,7 +9,7 @@
     <div class="d-flex justify-content-end mb-4"><a href="{{ route('user.houses.create') }}" class="btn btn-primary"><i
           class="fa-solid fa-house me-2"></i>Aggiungi
         Casa</a></div>
-    @foreach ($houses as $house)
+    @forelse($houses as $house)
       <div class="card mb-3">
         <div class="row g-0">
           <div class="col-md-4 col-img">
@@ -67,6 +67,15 @@
           </div>
         </div>
       </div>
-    @endforeach
+    @empty
+      <h1>Aggiungi la tua prima casa</h1>
+    @endforelse
+    <div class="d-flex justify-content-end my-5">
+      @if ($houses->hasPages())
+        {{ $houses->links() }}
+      @endif
+    </div>
   </div>
+
+
 @endsection

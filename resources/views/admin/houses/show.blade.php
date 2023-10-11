@@ -5,8 +5,16 @@
 @endsection
 @section('content')
     <div class=" mb-3 bg-white">
-        <div class="house-detail container my-5" v-for="house in  houseData " key="$house->id">
+        <div class="house-detail container my-5 d-flex justify-content-between align-items-center"
+            v-for="house in  houseData " key="$house->id">
             <h1 class="my-5">{{ $house->type }} | {{ $house->name }}</h1>
+            <div class="text-end">
+                @if ($house->is_published)
+                    <h5 class="badge p-3 fs-6" style="background-color: #24dd85">L'appartamento è Visibile</h5>
+                @else
+                    <h5 class="badge text-bg-danger p-3 fs-6">L'appartamento non è Visibile</h5>
+                @endif
+            </div>
         </div>
         <div class=" container">
             <div>
@@ -149,62 +157,52 @@
                 </div>
             </div>
         </div>
-        <h2 class="text-center mt-5">Statistiche</h2>
-        <select class="form-select w-50 mt-5" id="period-statistic">
-            <option value="1">Primo Semestre (Gen-Giu)</option>
-            <option value="2">Seconso Semestre (Lug-Dic)</option>
-            <option value="3">Annuale</option>
-        </select>
-        <div class="container container-chart my-5">
-            <canvas id="myChart"></canvas>
-        </div>
-        @if ($sponsorEndDate)
-            <li class="list-group-item">La Sponsorizzazione scade il:
-                <strong>{{ $sponsorEndDate }}</strong>
-            @else
-            <li class="list-group-item">Non ci sono Sponsorizzazioni
-        @endif
-        <div class="text-end">
-            @if ($house->is_published)
-                <h5 class="badge text-bg-primary p-3 fs-6">L'appartamento è Visibile</h5>
-            @else
-                <h5 class="badge text-bg-danger p-3 fs-6">L'appartamento non è Visibile</h5>
-            @endif
-        </div>
-        </li>
-        <li class=" list-group-item">
-            <div class="d-flex justify-content-between mt-3">
-                <a class="btn btn-secondary" href="{{ route('user.houses.index') }}">Torna Indietro</a>
+        <div class="container">
+
+            <h2 class="text-center mt-5">Statistiche</h2>
+            <select class="form-select w-50 mt-5" id="period-statistic">
+                <option value="1">Primo Semestre (Gen-Giu)</option>
+                <option value="2">Seconso Semestre (Lug-Dic)</option>
+                <option value="3">Annuale</option>
+            </select>
+            <div class="container container-chart my-5">
+                <canvas id="myChart"></canvas>
             </div>
-        </li>
-        </ul>
-    </div>
-    </div>
-    <button class="btn btn-primary btn-message" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
-        aria-controls="offcanvasExample">
-        <i class="fa-solid fa-comment fa-3x"></i>
-    </button>
-    <div class="offcanvas offcanvas-end w-50" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title p-50" id="offcanvasExampleLabel">Utenti interessati alla casa:
-                {{ $house->name }}
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body ">
-            @forelse($house->messages as $message)
-                <div class="card mt-4 ">
-                    <div class="my-offcanvas-body">
-                        {{ $message->email }}
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $message->name }}</h5>
-                        <p class="card-text">{{ $message->message }}</p>
-                    </div>
+            </li>
+            <li class=" list-group-item">
+                <div class="d-flex justify-content-between mt-3">
+                    <a class="btn btn-secondary" href="{{ route('user.houses.index') }}">Torna Indietro</a>
                 </div>
-            @empty
-                <h4>Nessun messaggio trovato</h4>
-            @endforelse
+            </li>
+            </ul>
+        </div>
+        <button class="btn btn-primary btn-message" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            <i class="fa-solid fa-comment fa-3x"></i>
+        </button>
+        <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title p-50" id="offcanvasExampleLabel">Utenti interessati alla casa:
+                    {{ $house->name }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body ">
+                @forelse($house->messages as $message)
+                    <div class="card mt-4 ">
+                        <div class="my-offcanvas-body d-flex justify-content-between">
+                            <span>{{ $message->email }}</span>
+                            <span>{{ $message->created_at }}</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $message->name }}</h5>
+                            <p class="card-text">{{ $message->message }}</p>
+                        </div>
+                    </div>
+                @empty
+                    <h4>Nessun messaggio trovato</h4>
+                @endforelse
+            </div>
         </div>
     </div>
 @endsection
