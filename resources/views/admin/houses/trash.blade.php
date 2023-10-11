@@ -39,7 +39,7 @@
                     </tr>
                 @empty
                     <td colspan="5">
-                        <h3>Non ci sono case</h3>
+                        <h3>Nessuna casa eliminata</h3>
                     </td>
                 @endforelse
             </tbody>

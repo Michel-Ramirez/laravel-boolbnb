@@ -147,8 +147,8 @@
             {{-- Content --}}
             @yield('content')
         </main>
+        @include('layouts.footer')
     </div>
-    @include('layouts.footer')
     @yield('scripts')
 </body>
 
