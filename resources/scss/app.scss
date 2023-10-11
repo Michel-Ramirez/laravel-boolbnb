@@ -5,12 +5,7 @@ body {
     font-family: sans-serif;
 }
 
-#app {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
 main {
+    min-height: calc(100vh - 527px);
     flex-grow: 1;
 }

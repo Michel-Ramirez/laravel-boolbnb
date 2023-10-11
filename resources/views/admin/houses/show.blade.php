@@ -105,7 +105,7 @@
                 </div>
                 <div class="col-xl-4 sponsor mt-5">
                     <div class="card">
-                        @if ($house->is_published && !$sponsorEndDate)
+                        @if (!$sponsorEndDate)
                             <div class="card-title">
                                 <figure>
                                     <img src="{{ Vite::asset('/public/img/9d23f024-bb5b-4307-b100-c1477e998fe5-removebg-preview.png') }}"
@@ -133,10 +133,17 @@
                                     nostri piani oggi stesso.
                                 </p>
                                 <h2 class="mb-5">Cosa aspetti?</h2>
-                                <div class="btn-sponsor my-4">
-                                    <a href="{{ route('user.houses.sponsors', $house) }}"
-                                        class="btn-custom">Sponsorizza</a>
-                                </div>
+                                @if (!$house->is_published)
+                                    <div class="alert alert-danger ">
+                                        <h5 class="fw-bold">ATTENZIONE</h5>
+                                        <small>Per poter sposorizzare devi rendere il tuo annuncio visibile</small>
+                                    </div>
+                                @else
+                                    <div class="btn-sponsor my-4">
+                                        <a href="{{ route('user.houses.sponsors', $house) }}"
+                                            class="btn-custom">Sponsorizza</a>
+                                    </div>
+                                @endif
                             </div>
                         @else
                             <div class="card-title-sponsor">
@@ -180,7 +187,8 @@
             data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
             <i class="fa-solid fa-comment fa-3x"></i>
         </button>
-        <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasExample"
+            aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title p-50" id="offcanvasExampleLabel">Utenti interessati alla casa:
                     {{ $house->name }}
