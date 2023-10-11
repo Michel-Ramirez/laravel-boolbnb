@@ -1,7 +1,6 @@
-
-body{
+body {
     position: relative;
-    .btn-message{
+    .btn-message {
         position: fixed;
         bottom: 150px;
         right: 25px;
@@ -15,11 +14,9 @@ body{
 }
 
 .house-composition {
-
     .card-title {
         margin-bottom: 0;
     }
-
 }
 
 .wrapper-composition-cards,
@@ -30,19 +27,16 @@ body{
     justify-content: center;
 }
 
-
 .house-composition .card,
 .house-services .card {
     width: 180px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px
+    padding: 20px;
 }
 
-
 .content-container {
-
     .house-description,
     .host-section,
     .house-services,
@@ -58,7 +52,6 @@ body{
     .house-description {
         padding: 30px 0;
     }
-
 }
 
 .form-reservation {
@@ -73,7 +66,6 @@ body{
         #detail_reservation {
             min-height: 200px;
         }
-
     }
 }
 
@@ -98,37 +90,91 @@ body{
     height: 100%;
 }
 .btn-custom {
-
-    padding:6px 15px 0px;
+    padding: 6px 15px 0px;
     border-radius: 30px;
     color: #ffffff;
     border: 0;
-    background-image: linear-gradient(to right, #97E15F, #22dd85);
+    background-image: linear-gradient(to right, #97e15f, #22dd85);
     text-decoration: none;
 
     &:hover {
-        background-image: linear-gradient(to right, #4C4C4C, #191919);
+        background-image: linear-gradient(to right, #4c4c4c, #191919);
         color: white;
     }
 }
-.offcanvas{
-    div{
+.offcanvas {
+    div {
         border-radius: 25px;
     }
-    .my-offcanvas-body{
+    .my-offcanvas-body {
         padding: 10px;
         border-radius: 23px;
-        background-image:linear-gradient(to right, #97E15F, #22dd85);
+        background-image: linear-gradient(to right, #97e15f, #22dd85);
     }
 }
-.p-50{
+.p-50 {
     padding-left: 25%;
 }
 
-
-.container-chart{
+.container-chart {
     min-height: 500px;
-    #myChart{
-    height: 100%;
+    #myChart {
+        height: 100%;
+    }
+}
+
+.sponsor {
+    .card {
+        // box-shadow: inset 0px 0px 100px -28px #24dd85;
+        box-shadow: 0px 0px 11px 0px #24dd85;
+    }
+
+    .card-title {
+        display: flex;
+
+        figure {
+            width: calc(100% / 3);
+
+            img {
+                width: 100%;
+            }
+        }
+
+        .text-bronze {
+            color: #7f5330;
+        }
+        .text-silver {
+            color: #8a8b8f;
+        }
+        .text-gold {
+            color: #ecae23;
+        }
+
+        .text-bronze,
+        .text-silver,
+        .text-gold {
+            font-weight: 700;
+        }
+    }
+
+    .card-title-sponsor {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .fa-solid.fa-medal {
+            margin-top: 20px;
+            font-size: 10rem;
+        }
+    }
+
+    .btn-sponsor {
+        height: 50px;
+
+        .btn-custom {
+            padding: 20px 90px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
     }
 }
