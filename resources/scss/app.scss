@@ -1,15 +1,16 @@
 @use "./utilities.scss";
-@import '~bootstrap/scss/bootstrap';
-body{
+@import "~bootstrap/scss/bootstrap";
+body {
     display: block;
+    font-family: sans-serif;
 }
 
-#app{
+#app {
     height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-main{
+main {
     flex-grow: 1;
 }
