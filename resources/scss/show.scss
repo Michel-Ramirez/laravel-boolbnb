@@ -132,3 +132,15 @@ body{
     height: 100%;
     }
 }
+
+.offcanvas {
+    width: 100% !important;
+}
+
+@media (min-width: 960px){
+
+.offcanvas {
+    width: 50% !important;
+}
+
+}

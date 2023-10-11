@@ -132,8 +132,7 @@
             data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
             <i class="fa-solid fa-comment fa-3x"></i>
         </button>
-        <div class="offcanvas offcanvas-end w-50" tabindex="-1" id="offcanvasExample"
-            aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title p-50" id="offcanvasExampleLabel">Utenti interessati alla casa:
                     {{ $house->name }}
