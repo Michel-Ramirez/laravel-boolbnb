@@ -142,8 +142,9 @@
             <div class="offcanvas-body ">
                 @forelse($house->messages as $message)
                     <div class="card mt-4 ">
-                        <div class="my-offcanvas-body">
-                            {{ $message->email }}
+                        <div class="my-offcanvas-body d-flex justify-content-between">
+                            <span>{{ $message->email }}</span>
+                            <span>{{ $message->created_at }}</span>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $message->name }}</h5>
