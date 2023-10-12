@@ -1,11 +1,19 @@
+footer {
+    background-color: #f7f7f7;
+    border-top: 1.5px solid lightgray;
 
-    footer {
-        .footer{
-            background-color: #F7F7F7;
-            border-top: 1.5px solid lightgray;
-        }   
+    h5 {
+        font-size: 1rem;
     }
 
+    h6 {
+        font-size: 0.8rem;
+    }
+
+    .fa-brands {
+        font-size: 1rem;
+    }
+}
 
 .bottom-footer {
     height: 50px;

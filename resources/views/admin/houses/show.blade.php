@@ -27,9 +27,9 @@
                         <h5>{{ $house->address->home_address }}</h5>
                     </div>
                     <div>
-                        <span>Stanze: {{ $house->total_rooms }}</span> |
-                        <span>Letti: {{ $house->total_beds }}</span> |
-                        <span>Bagni: {{ $house->total_bath }}</span>
+                        <span><strong>Stanze:</strong> {{ $house->total_rooms }}</span> |
+                        <span><strong>Letti:</strong> {{ $house->total_beds }}</span> |
+                        <span><strong>Bagni:</strong> {{ $house->total_bath }}</span>
                         <p class="text-end"><strong>{{ $house->night_price }}€</strong>/Notte</p>
                     </div>
                     <div class="house-description" id="houseId" data-house-id="{{ $house->id }}">
