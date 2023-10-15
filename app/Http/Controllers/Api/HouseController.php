@@ -36,7 +36,23 @@ class HouseController extends Controller
                 $house["photo"] = url("storage/" . $house->photo);
             }
         }
-        return response()->json($houses);
+
+        // Aggiungi tutte le case dalla tabella House usando il modello House
+        $all_houses = House::with("services", "address")->get();
+
+        foreach ($all_houses as $house) {
+            if ($house->photo) {
+                $house["photo"] = url("storage/" . $house->photo);
+            }
+        }
+
+        // Creo un array associativo con entrambe le variabili
+        $response = [
+            'houses' => $houses,
+            'all_houses' => $all_houses,
+        ];
+
+        return response()->json($response);
     }
 
     /**
