@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HouseController;
+use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,7 @@ Route::prefix("/user")->middleware(["auth"])->name("user.")->group(function () {
     Route::get('/houses/trash', [HouseController::class, 'trash'])->name('houses.trash');
     Route::get('/houses/{house}/sponsors}', [HouseController::class, 'sponsors'])->name('houses.sponsors');
     Route::get('/houses/{house}/sponsors/{sponsor}', [HouseController::class, 'sponsor'])->name('houses.sponsor');
+    Route::post('/photoes', [PhotoController::class, 'store'])->name('photoes.store');
     Route::post('/houses/{house}/sponsors/{sponsor}/payment', [HouseController::class, 'payment'])->name('houses.payment');
 
     Route::patch('/houses/{house}/restore', [HouseController::class, 'restore'])->name('houses.restore');

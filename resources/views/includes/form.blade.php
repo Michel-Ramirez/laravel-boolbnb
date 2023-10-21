@@ -120,16 +120,20 @@
         </div>
     </div>
     {{-- Photo --}}
-    <div class="col-12 col-md-6">
-        <div class="mb-3">
-            <label for="photo" class="form-label">Inserisci l'immagine della casa</label>
-            <input class="form-control @error('photo') is-invalid @enderror" type="file" id="photo"
-                name="photo">
-            @error('photo')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
+    <form action="{{ route('user.photoes.store') }}" method="POST" id="form-houses" enctype="multipart/form-data"
+    data-type="create">
+    @csrf
+        <div class="col-12 col-md-6">
+            <div class="mb-3">
+                <label for="photo" class="form-label">Inserisci l'immagine della casa</label>
+                <input class="form-control @error('photo') is-invalid @enderror" type="file" id="photo"
+                    name="photoes" multiple>
+                @error('photo')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
-    </div>
+    </form>
     {{-- Preview --}}
     <div class="col-12 col-md-3 col-lg-2">
         <img src="{{ $house->photo ? asset('/storage/' . $house->photo) : 'https://saterdesign.com/cdn/shop/products/property-placeholder_a9ec7710-1f1e-4654-9893-28c34e3b6399_600x.jpg?v=1500393334' }}"
