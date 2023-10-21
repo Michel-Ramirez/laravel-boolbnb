@@ -27,11 +27,11 @@ class PhotoController extends Controller
      */
     public function store(Request $request)
     {
-      $request->validate([
-        'img'=> 'image|nullable',
-      ],[
-        'img.image' => 'Il formato caricato non è supportato',
-      ]);
+    //   $request->validate([
+    //     'img'=> 'image|nullable',
+    //   ],[
+    //     'img.image' => 'Il formato caricato non è supportato',
+    //   ]);
 
       $data = $request->all();
 
