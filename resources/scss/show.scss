@@ -182,6 +182,62 @@ body {
     width: 100% !important;
 }
 
+.gallery img {
+    height: 750px;
+    width: 100%;
+    object-fit: cover;
+    display: none;
+    border-radius: 10px;
+}
+
+.carousel {
+    position: relative;
+}
+
+#prev,
+#next {
+    i {
+        color: white;
+        font-size: 3rem;
+    }
+    position: absolute;
+    height: 100%;
+    width: 120px;
+    background-color: rgba(0, 0, 0, 0.351);
+    visibility: hidden;
+    font-size: 2rem;
+    top: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel:hover #next,
+.carousel:hover #prev {
+    visibility: visible;
+    animation: fadeIn 1s;
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+}
+
+#prev {
+    left: 0px;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+#next {
+    right: 0px;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+
 @media (min-width: 960px) {
     .offcanvas {
         width: 50% !important;

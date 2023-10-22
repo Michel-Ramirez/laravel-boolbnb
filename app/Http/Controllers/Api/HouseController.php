@@ -21,7 +21,7 @@ class HouseController extends Controller
     public function index()
     {
 
-        $houses = House::has('sponsors', '>', 0)->with("views", "services", "address")->orderBy('created_at', "DESC")->where("is_published", true)
+        $houses = House::has('sponsors', '>', 0)->with("views", "services", "address", "photos")->orderBy('created_at', "DESC")->where("is_published", true)
             ->whereHas('sponsors', function ($query) {
                 $query->where('sponsor_end', '>', now());
             })

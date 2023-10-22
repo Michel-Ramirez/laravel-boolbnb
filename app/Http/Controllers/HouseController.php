@@ -130,12 +130,12 @@ class HouseController extends Controller
             foreach ($request->file('photos') as $photo) {
 
                 // Salva l'immagine nella cartella "storage/app/public/photos"
-                $photoPath = $photo->store('photos', 'public'); 
-                
+                $photoPath = $photo->store('photos', 'public');
+
                 $newPhoto = new Photo();
 
                 // Collega la foto alla casa appena creata
-                $newPhoto->house_id = $house->id; 
+                $newPhoto->house_id = $house->id;
                 $newPhoto->img = $photoPath;
                 $newPhoto->save();
             }
@@ -156,7 +156,6 @@ class HouseController extends Controller
     public function show(House $house)
     {
 
-        dd($house);
         // Control if the log user is same of the house user
         $user = Auth::id();
         if ($house->user_id != $user) {
@@ -174,7 +173,7 @@ class HouseController extends Controller
             $sponsorEnd = $lastSponsorEnd->pivot->sponsor_end;
             $sponsorEndDate = Carbon::parse($sponsorEnd)->format('d/m/Y');
         }
-    
+
         return view('admin.houses.show', compact('house', 'sponsorEndDate'));
     }
 

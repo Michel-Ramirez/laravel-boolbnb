@@ -17,9 +17,16 @@
             </div>
         </div>
         <div class=" container">
-            <div>
-                <img src="{{ $house->photo ? asset('storage/' . $house->photo) : 'https://saterdesign.com/cdn/shop/products/property-placeholder_a9ec7710-1f1e-4654-9893-28c34e3b6399_600x.jpg?v=1500393334' }}"
-                    class="img-fluid w-100" alt="...">
+            <div class="carousel">
+                <div id="prev">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class='gallery'>
+                    {{-- CAROUSEL --}}
+                </div>
+                <div id="next">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
             </div>
             <div class="row my-4">
                 <div class="col-xl-8 content-container">
@@ -115,7 +122,7 @@
                                 <figure>
                                     <img src="{{ Vite::asset('/public/img/c65c1df1-853e-4c3c-bab6-a0cc4d7b0ac8-removebg-preview.png') }}"
                                         alt="">
-                                    <h4 class="text-center text-gold">Gorld</h4>
+                                    <h4 class="text-center text-gold">Gold</h4>
                                 </figure>
                             </div>
                             <div class="card-body text-center">
@@ -182,7 +189,8 @@
             data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
             <i class="fa-solid fa-comment fa-3x"></i>
         </button>
-        <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasExample"
+            aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title p-50" id="offcanvasExampleLabel">Utenti interessati alla casa:
                     {{ $house->name }}
@@ -207,6 +215,68 @@
             </div>
         </div>
     </div>
+    <script>
+        //********* CREO UN CAROSELLO DI IMG *************//
+
+        // richiamo l'oggetto con il metodo json per renderlo leggibile su JS
+        const photos = {!! json_encode($house->photos) !!};
+
+        // creao nuovo array con solo gli url delle immagini
+        const images = photos.map(function(photo) {
+            return photo.img;
+        })
+
+        const innerGallery = document.querySelector('.gallery');
+        const prevBtn = document.getElementById('prev');
+        const nextBtn = document.getElementById('next');
+
+        let imgElement = '';
+        const basiUrl = 'http://127.0.0.1:8000/storage/';
+        const placeHolder =
+            'https://saterdesign.com/cdn/shop/products/property-placeholder_a9ec7710-1f1e-4654-9893-28c34e3b6399_600x.jpg?v=1500393334';
+
+        if (!images.length) {
+            imgElement += `<img src = "${placeHolder}" >`;
+            prevBtn.classList.add('invisible');
+            nextBtn.classList.add('invisible');
+        }
+        for (let i = 0; i < images.length; i++) {
+            imgUrl = basiUrl + images[i];
+            imgElement += `<img src = "${imgUrl}">`;
+        }
+
+        innerGallery.innerHTML = imgElement;
+
+        const imagesView = document.querySelectorAll('.gallery img');
+
+        let currrentImg = 0;
+        imagesView[currrentImg].classList.add('d-block', 'img-fluid');
+
+
+        nextBtn.addEventListener('click', function() {
+            imagesView[currrentImg].classList.remove('d-block')
+
+            currrentImg++;
+
+            if (currrentImg === images.length) {
+                currrentImg = 0;
+            }
+
+            imagesView[currrentImg].classList.add('d-block', 'img-fluid');
+        });
+
+        prevBtn.addEventListener('click', function() {
+            imagesView[currrentImg].classList.remove('d-block');
+
+            currrentImg--;
+
+            if (currrentImg < 0) {
+                currrentImg = images.length - 1;
+            }
+
+            imagesView[currrentImg].classList.add('d-block');
+        })
+    </script>
 @endsection
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
