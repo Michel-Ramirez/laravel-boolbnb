@@ -57,7 +57,7 @@ class House extends Model
 
     // Funzione per richiamare le foto
 
-    public function photoes()
+    public function photos()
     {
         return $this->hasMany(Photo::class);
     }

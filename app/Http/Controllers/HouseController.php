@@ -29,7 +29,8 @@ class HouseController extends Controller
 
         $user = Auth::user();
         // $houses = $user->houses;
-        $houses = House::where('user_id', '=', $user->id)->paginate(5);
+        $houses = House::where('user_id', '=', $user->id)->with('photos')->paginate(5);
+
         return view("admin.houses.index", compact("houses"));
     }
 
@@ -154,6 +155,8 @@ class HouseController extends Controller
      */
     public function show(House $house)
     {
+
+        dd($house);
         // Control if the log user is same of the house user
         $user = Auth::id();
         if ($house->user_id != $user) {
@@ -171,6 +174,7 @@ class HouseController extends Controller
             $sponsorEnd = $lastSponsorEnd->pivot->sponsor_end;
             $sponsorEndDate = Carbon::parse($sponsorEnd)->format('d/m/Y');
         }
+    
         return view('admin.houses.show', compact('house', 'sponsorEndDate'));
     }
 
