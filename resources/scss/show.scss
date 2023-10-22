@@ -192,25 +192,39 @@ body {
 
 .carousel {
     position: relative;
-}
-
-#prev,
-#next {
-    i {
-        color: white;
-        font-size: 3rem;
+    #prev,
+    #next {
+        i {
+            color: white;
+            font-size: 3rem;
+        }
+        position: absolute;
+        height: 100%;
+        width: 120px;
+        background-color: rgba(0, 0, 0, 0.351);
+        visibility: hidden;
+        font-size: 2rem;
+        top: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    position: absolute;
-    height: 100%;
-    width: 120px;
-    background-color: rgba(0, 0, 0, 0.351);
-    visibility: hidden;
-    font-size: 2rem;
-    top: 0;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+    .counter {
+        width: 100%;
+        position: absolute;
+        bottom: 20px;
+        display: flex;
+        justify-content: center;
+
+        .counter-text {
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            background-color: rgba(0, 0, 0, 0.37);
+        }
+    }
 }
 
 .carousel:hover #next,

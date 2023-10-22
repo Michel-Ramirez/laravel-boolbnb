@@ -27,6 +27,11 @@
                 <div id="next">
                     <i class="fa-solid fa-chevron-right"></i>
                 </div>
+                <div class="counter">
+                    <span class="counter-text">
+                        {{-- CONTEGGIO --}}
+                    </span>
+                </div>
             </div>
             <div class="row my-4">
                 <div class="col-xl-8 content-container">
@@ -229,6 +234,7 @@
         const innerGallery = document.querySelector('.gallery');
         const prevBtn = document.getElementById('prev');
         const nextBtn = document.getElementById('next');
+        const displayCounter = document.querySelector('.counter-text');
 
         let imgElement = '';
         const basiUrl = 'http://127.0.0.1:8000/storage/';
@@ -239,6 +245,8 @@
             imgElement += `<img src = "${placeHolder}" >`;
             prevBtn.classList.add('invisible');
             nextBtn.classList.add('invisible');
+            displayCounter.classList.add('invisible');
+
         }
         for (let i = 0; i < images.length; i++) {
             imgUrl = basiUrl + images[i];
@@ -253,6 +261,10 @@
         imagesView[currrentImg].classList.add('d-block', 'img-fluid');
 
 
+
+        displayCounter.innerHTML = `${currrentImg + 1}/${images.length}`
+
+
         nextBtn.addEventListener('click', function() {
             imagesView[currrentImg].classList.remove('d-block')
 
@@ -263,6 +275,7 @@
             }
 
             imagesView[currrentImg].classList.add('d-block', 'img-fluid');
+            displayCounter.innerHTML = `${currrentImg + 1}/${images.length}`
         });
 
         prevBtn.addEventListener('click', function() {
@@ -275,6 +288,8 @@
             }
 
             imagesView[currrentImg].classList.add('d-block');
+            displayCounter.innerHTML = `${currrentImg + 1}/${images.length}`
+
         })
     </script>
 @endsection
