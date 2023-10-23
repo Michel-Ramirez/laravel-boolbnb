@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HouseController;
+use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 

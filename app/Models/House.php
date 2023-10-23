@@ -54,4 +54,11 @@ class House extends Model
     {
         return $this->belongsToMany(Sponsor::class)->withPivot('sponsor_start', 'sponsor_end');
     }
+
+    // Funzione per richiamare le foto
+
+    public function photos()
+    {
+        return $this->hasMany(Photo::class);
+    }
 }

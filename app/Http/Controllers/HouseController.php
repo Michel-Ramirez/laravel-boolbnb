@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use App\Models\House;
+use App\Models\Photo;
 use App\Models\Service;
 use App\Models\Sponsor;
 use App\Models\User;
@@ -28,7 +29,8 @@ class HouseController extends Controller
 
         $user = Auth::user();
         // $houses = $user->houses;
-        $houses = House::where('user_id', '=', $user->id)->paginate(5);
+        $houses = House::where('user_id', '=', $user->id)->with('photos')->paginate(5);
+
         return view("admin.houses.index", compact("houses"));
     }
 
@@ -107,10 +109,10 @@ class HouseController extends Controller
         $house->address_id = $address->id;
 
         // Add Photo in house
-        if (array_key_exists('photo', $data)) {
-            $photo_path = Storage::putFile('house_img', $data['photo']);
-            $data['photo'] = $photo_path;
-        }
+        // if (array_key_exists('photo', $data)) {
+        //     $photo_path = Storage::putFile('house_img', $data['photo']);
+        //     $data['photo'] = $photo_path;
+        // }
 
         // Add is published
         if (array_key_exists('is_published', $data)) {
@@ -122,6 +124,22 @@ class HouseController extends Controller
 
         // Save house into db
         $house->save();
+
+        // Verifico se ci sono delle file nell'array di foto
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+
+                // Salva l'immagine nella cartella "storage/app/public/photos"
+                $photoPath = $photo->store('photos', 'public');
+
+                $newPhoto = new Photo();
+
+                // Collega la foto alla casa appena creata
+                $newPhoto->house_id = $house->id;
+                $newPhoto->img = $photoPath;
+                $newPhoto->save();
+            }
+        }
 
         // Add relation many to many with service
         if (array_key_exists('service', $data)) {
@@ -137,6 +155,7 @@ class HouseController extends Controller
      */
     public function show(House $house)
     {
+
         // Control if the log user is same of the house user
         $user = Auth::id();
         if ($house->user_id != $user) {
@@ -154,6 +173,7 @@ class HouseController extends Controller
             $sponsorEnd = $lastSponsorEnd->pivot->sponsor_end;
             $sponsorEndDate = Carbon::parse($sponsorEnd)->format('d/m/Y');
         }
+
         return view('admin.houses.show', compact('house', 'sponsorEndDate'));
     }
 

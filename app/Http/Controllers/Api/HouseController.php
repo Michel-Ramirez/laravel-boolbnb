@@ -21,7 +21,7 @@ class HouseController extends Controller
     public function index()
     {
 
-        $houses = House::has('sponsors', '>', 0)->with("views", "services", "address")->orderBy('created_at', "DESC")->where("is_published", true)
+        $houses = House::has('sponsors', '>', 0)->with("views", "services", "address", "photos")->orderBy('created_at', "DESC")->where("is_published", true)
             ->whereHas('sponsors', function ($query) {
                 $query->where('sponsor_end', '>', now());
             })
@@ -30,19 +30,28 @@ class HouseController extends Controller
             }])
             ->paginate(6);
 
+
         // Giro su tutte le case
-        foreach ($houses as $house) {
-            if ($house->photo) {
-                $house["photo"] = url("storage/" . $house->photo);
+        foreach ($houses as $house_photos) {
+
+            if ($house_photos->photos) {
+                foreach ($house_photos->photos as $image) {
+
+                    $image["img"] = url("storage/" . $image->img);
+                }
             }
         }
 
         // Aggiungi tutte le case dalla tabella House usando il modello House
-        $all_houses = House::with("services", "address")->get();
+        $all_houses = House::with("services", "address", "photos")->get();
 
-        foreach ($all_houses as $house) {
-            if ($house->photo) {
-                $house["photo"] = url("storage/" . $house->photo);
+        foreach ($all_houses as $house_photos) {
+
+            if ($house_photos->photos) {
+                foreach ($house_photos->photos as $image) {
+
+                    $image["img"] = url("storage/" . $image->img);
+                }
             }
         }
 
@@ -69,12 +78,16 @@ class HouseController extends Controller
     public function show(string $id)
     {
         //
-        $house = House::with("address", "user", "services")->find($id);
+        $house = House::with("address", "user", "services", "photos")->find($id);
 
-        // Giro su tutte le case
-        if ($house->photo) {
-            $house["photo"] = url("storage/" . $house->photo);
+        foreach ($house->photos as $house_photos) {
+
+            if ($house_photos->img) {
+
+                $house_photos["img"] = url("storage/" . $house_photos->img);
+            }
         }
+
         return response()->json($house);
     }
 

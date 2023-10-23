@@ -9,7 +9,6 @@ return [
         "total_rooms" => 4,
         "total_beds" => 6,
         "mq" => 180,
-        "photo" => "appartamento_lusso.jpg",
         "is_published" => true,
     ],
     [
@@ -21,7 +20,6 @@ return [
         "total_rooms" => 3,
         "total_beds" => 4,
         "mq" => 120,
-        "photo" => "appartamento_vista_mare.jpg",
         "is_published" => true,
     ],
     [
@@ -33,7 +31,6 @@ return [
         "total_rooms" => 2,
         "total_beds" => 3,
         "mq" => 90,
-        "photo" => "appartamento_montagna.jpg",
         "is_published" => true,
     ],
     [
@@ -45,7 +42,6 @@ return [
         "total_rooms" => 3,
         "total_beds" => 5,
         "mq" => 150,
-        "photo" => "appartamento_moderno.jpg",
         "is_published" => true,
     ],
     [
@@ -57,7 +53,6 @@ return [
         "total_rooms" => 2,
         "total_beds" => 4,
         "mq" => 110,
-        "photo" => "appartamento_rustico.jpg",
         "is_published" => true,
     ],
 ];

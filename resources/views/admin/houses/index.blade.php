@@ -13,8 +13,12 @@
             <div class="card mb-3">
                 <div class="row g-0">
                     <div class="col-md-4 col-img">
-                        <img src="{{ $house->photo ? asset('storage/' . $house->photo) : 'https://saterdesign.com/cdn/shop/products/property-placeholder_a9ec7710-1f1e-4654-9893-28c34e3b6399_600x.jpg?v=1500393334' }}"
-                            class="rounded-start  img-fluid">
+                        @foreach ($house->photos as $photo)
+                            @if ($loop->first)
+                                <img src="{{ $photo->img ? asset('storage/' . $photo->img) : 'https://saterdesign.com/cdn/shop/products/property-placeholder_a9ec7710-1f1e-4654-9893-28c34e3b6399_600x.jpg?v=1500393334' }}"
+                                    class="rounded-start  img-fluid">
+                            @endif
+                        @endforeach
                     </div>
                     <div class="col-md-8">
                         <div class="card-body pb-0">

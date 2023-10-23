@@ -23,7 +23,6 @@ return new class extends Migration
             $table->unsignedTinyInteger("total_rooms");
             $table->unsignedTinyInteger("total_beds");
             $table->smallInteger("mq")->nullable();
-            $table->string("photo")->nullable();
             $table->boolean("is_published")->default(0);
             $table->timestamps();
             $table->softDeletes();
