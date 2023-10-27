@@ -170,7 +170,7 @@ class HouseController extends Controller
             (6371 * ACOS(COS(RADIANS(?)) * COS(RADIANS(addresses.latitude)) * COS(RADIANS(addresses.longitude) - RADIANS(?)) + SIN(RADIANS(?)) * SIN(RADIANS(addresses.latitude))))
             AS distance", [$lat, $lng, $lat])
                 ->join('addresses', 'houses.address_id', '=', 'addresses.id')
-                ->with("services", "sponsors")
+                ->with("services", "sponsors", "photos")
                 ->where("houses.is_published", "1")
                 ->orderBy('distance', "ASC");
 
@@ -216,11 +216,17 @@ class HouseController extends Controller
             }
             // Ritorno l'array di case
             // Giro su tutte le case
-            foreach ($housesList as $house) {
-                if ($house->photo) {
-                    $house["photo"] = url("storage/" . $house->photo);
+
+            foreach ($housesList as $house_photos) {
+
+                if ($house_photos->photos) {
+                    foreach ($house_photos->photos as $image) {
+
+                        $image["img"] = url("storage/" . $image->img);
+                    }
                 }
             }
+
             return response()->json($housesList);
             // Se la chiamata non va a buon fine
         } else {
